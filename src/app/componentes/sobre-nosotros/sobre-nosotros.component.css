@@ -1,0 +1,6 @@
+.sobre-container { background: #f8f9fa; }
+h1 { color: #8B4513; font-size: 2.5rem; }
+.contact-section { background: #1976D2; border-radius: 15px; }
+.form-control { border-radius: 10px; border: none; }
+.btn-warning { background: #FFD700 !important; color: #8B4513 !important; border-radius: 10px; }
+.row { justify-content: center; }

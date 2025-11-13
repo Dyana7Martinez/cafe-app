@@ -1,0 +1,4 @@
+.nav-link.active {
+  color: #F6AD55 !important; /* Dorado para ruta activa */
+  background-color: rgba(246, 173, 85, 0.2);
+}

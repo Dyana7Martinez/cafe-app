@@ -1,0 +1,48 @@
+.bg-primary {
+  background: linear-gradient(135deg, #1976D2 0%, #2196F3 100%);  /* Azul degradado */
+}
+
+h1 {
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.lead {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+i {
+  color: #FFD700;  /* Dorado para iconos */
+}
+
+h5 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.btn-warning {
+  background: #FFD700 !important;
+  border: none !important;
+  color: #8B4513 !important;
+  border-radius: 25px;
+  padding: 12px 30px;
+  font-weight: bold;
+  transition: transform 0.3s;
+}
+
+.btn-warning:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.row > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

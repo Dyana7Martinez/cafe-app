@@ -1,0 +1,4 @@
+.btn-agregar:hover {
+  transform: scale(1.05); /* Efecto zoom sutil */
+  transition: 0.3s;
+}
