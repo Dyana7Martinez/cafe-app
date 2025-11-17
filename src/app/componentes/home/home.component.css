@@ -1,45 +1,11 @@
-/* --- Navbar estilo café --- */
-.navbar {
-  background-color: #fff !important;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+.hero-section {
+  background-image: url('/assets/background-coffee.jpg');
+  background-size: cover;
+  background-position: center;
 }
-
-/* Color café para el nombre de marca */
-.navbar .navbar-brand {
-  color: #6f4e37 !important; /* café oscuro */
-  font-weight: 700;
-  font-size: 1.5rem;
+.features-section .card {
+  transition: transform 0.3s;
 }
-
-/* Icono de la marca */
-.navbar .navbar-brand i {
-  color: #d4a574; /* dorado claro */
-}
-
-/* Color café para los enlaces */
-.navbar .nav-link {
-  color: #6f4e37 !important;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-/* Efecto hover más claro */
-.navbar .nav-link:hover {
-  color: #a0522d !important; /* café más cálido */
-}
-
-/* Botón “Iniciar Sesión” */
-.navbar .btn-outline-primary {
-  border-color: #6f4e37 !important;
-  color: #6f4e37 !important;
-  font-weight: 600;
-  border-radius: 25px;
-  transition: all 0.3s ease;
-}
-
-.navbar .btn-outline-primary:hover {
-  background-color: #6f4e37 !important;
-  color: #fff !important;
-  transform: translateY(-2px);
+.features-section .card:hover {
+  transform: scale(1.05);
 }

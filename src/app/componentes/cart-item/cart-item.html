@@ -1,0 +1,6 @@
+<div class="container mt-4">
+  <div *ngIf="carrito.length > 0">
+    <app-cart-item *ngFor="let item of carrito" [producto]="item" (remove)="removerDelCarrito($event)"></app-cart-item>
+  </div>
+  <div *ngIf="carrito.length === 0" class="alert alert-info">Carrito vacío</div>
+</div>

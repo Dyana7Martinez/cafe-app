@@ -1,0 +1,8 @@
+<div class="container mt-4">
+  <div class="row" *ngIf="getProductosPorCategoria().length > 0">
+    <div class="col-md-4 mb-4" *ngFor="let producto of getProductosPorCategoria(); trackBy: trackById">
+      <app-menu-item [producto]="producto" (addToCart)="agregarAlCarrito($event)"></app-menu-item>
+    </div>
+  </div>
+  <div *ngIf="getProductosPorCategoria().length === 0" class="text-center">No hay productos</div>
+</div>

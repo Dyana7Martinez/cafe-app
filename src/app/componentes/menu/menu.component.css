@@ -1,4 +1,32 @@
-.btn-agregar:hover {
-  transform: scale(1.05); /* Efecto zoom sutil */
-  transition: 0.3s;
+.menu-container {
+  background-color: #f5f1e9;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+.card-custom {
+  border: none;
+  background-color: #fff5e6;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+.card-custom:hover {
+  transform: scale(1.05);
+}
+.btn-custom-primary {
+  background-color: #6f4e37;
+  border: none;
+  transition: background-color 0.3s;
+}
+.btn-custom-primary:hover {
+  background-color: #8b5a2b;
+}
+.btn-custom-warning {
+  background-color: #d2b48c;
+  border: none;
+  transition: background-color 0.3s;
+}
+.btn-custom-warning:hover {
+  background-color: #c68e17;
 }

@@ -1,49 +1,38 @@
-<div class="container my-5">
-  <div class="row justify-content-center mb-4">
-    <h1 class="text-center fw-bold" style="color: #F6AD55;">Nuestro Menú</h1>
-    <p class="text-center lead text-muted">Descubre nuestras especialidades hechas con pasión</p>
-  </div>
+<div class="container mt-4">
 
-  <!-- Tabs para categorías -->
-  <ul class="nav nav-tabs justify-content-center mb-4" id="categoriaTabs">
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="categoriaSeleccionada === 'calientes'" (click)="cambiarCategoria('calientes')">Bebidas Calientes</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="categoriaSeleccionada === 'frias'" (click)="cambiarCategoria('frias')">Bebidas Frías</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="categoriaSeleccionada === 'bebidas'" (click)="cambiarCategoria('bebidas')">Bebidas</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="categoriaSeleccionada === 'comida'" (click)="cambiarCategoria('comida')">Comida</a>
+  <!-- Tabs de Categorías -->
+  <ul class="nav nav-tabs mb-4">
+    <li class="nav-item" *ngFor="let cat of ['calientes','frias','comida','bebidas']">
+      <a class="nav-link"
+         [class.active]="categoriaSeleccionada === cat"
+         (click)="cambiarCategoria(cat)">
+         {{ cat | titlecase }}
+      </a>
     </li>
   </ul>
 
-  <div class="row justify-content-center mb-4">
-    <button class="btn btn-outline-warning mx-auto" (click)="verCarrito()" style="color: #F6AD55; border-color: #F6AD55;">
-      Ver Carrito ({{ carrito.length }})
-    </button>
-  </div>
-
-  <div class="row g-4" *ngIf="getProductosPorCategoria().length > 0; else sinProductos">
-    <div class="col-md-4" *ngFor="let producto of getProductosPorCategoria(); trackBy: trackById">
-      <div class="card h-100 shadow border-0" style="border-radius: 15px; background-color: #f8f9fa;">
-        <img [src]="producto.imagen" [alt]="producto.nombre" class="card-img-top" style="height: 200px; object-fit: cover;">
+  <!-- Productos por categoría -->
+  <div class="row">
+    <div *ngFor="let producto of getProductosPorCategoria(); trackBy: trackById" class="col-md-4 mb-4">
+      <div class="card h-100 shadow-sm">
+        <img [src]="producto.imagen" class="card-img-top" [alt]="producto.nombre">
         <div class="card-body d-flex flex-column">
-          <h5 class="card-title fw-bold" style="color: #4A2C0B;">{{ producto.nombre }}</h5>
-          <p class="card-text flex-grow-1">{{ producto.descripcion }}</p>
-          <p class="fw-bold text-success mb-3">${{ producto.precio }}</p>
-          <button class="btn btn-warning w-100 mt-auto" (click)="agregarAlCarrito(producto)" style="background-color: #F6AD55; border-color: #F6AD55; color: #4A2C0B;">
-            Agregar
+          <h5 class="card-title">{{ producto.nombre }}</h5>
+          <p class="card-text">{{ producto.descripcion }}</p>
+          <p class="font-weight-bold">$ {{ producto.precio }}</p>
+          <button class="btn btn-primary mt-auto" (click)="agregarAlCarrito(producto)">
+            Añadir al carrito
           </button>
         </div>
       </div>
     </div>
   </div>
-  <ng-template #sinProductos>
-    <div class="text-center">
-      <p class="lead">No hay productos en esta categoría. ¡Prueba otra!</p>
-    </div>
-  </ng-template>
+
+  <!-- Botón ver carrito -->
+  <div class="text-center mt-4">
+    <button class="btn btn-success btn-lg" (click)="verCarrito()">
+      Ver carrito ({{ carrito.length }})
+    </button>
+  </div>
+
 </div>

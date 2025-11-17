@@ -1,1 +1,25 @@
-<p>actualizar works!</p>
+<div class="container mt-4" *ngIf="producto">
+  <h2>Actualizar Producto</h2>
+  <div class="form-group">
+    <label>Nombre</label>
+    <input [(ngModel)]="producto.nombre" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Descripción</label>
+    <input [(ngModel)]="producto.descripcion" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Precio</label>
+    <input [(ngModel)]="producto.precio" type="number" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Imagen URL</label>
+    <input [(ngModel)]="producto.imagen" class="form-control">
+  </div>
+  <div class="form-group">
+    <label>Categoría</label>
+    <input [(ngModel)]="producto.categoria" class="form-control">
+  </div>
+  <button (click)="guardarCambios()" class="btn btn-primary">Guardar</button>
+</div>
+<div *ngIf="!producto" class="text-center">Cargando...</div>
