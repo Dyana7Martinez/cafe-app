@@ -1,11 +1,83 @@
-.hero-section {
-  background-image: url('/assets/background-coffee.jpg');
-  background-size: cover;
-  background-position: center;
+/************* GLOBAL FIX *************/
+body { padding-top: 70px; }
+
+/************* HERO + PARALLAX *************/
+.hero {
+  min-height: calc(100vh - 70px);
+  background: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085') center/cover fixed no-repeat;
+  position: relative;
+  display: flex;
+  overflow: hidden;
 }
-.features-section .card {
-  transition: transform 0.3s;
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
 }
-.features-section .card:hover {
-  transform: scale(1.05);
+
+.hero-img {
+  max-height: 480px;
+  border-radius: 20px;
+  object-fit: cover;
+  opacity: 0;
+  transform: translateY(30px);
 }
+
+/************* FEATURE CARDS *************/
+.feature-card {
+  padding: 30px;
+  border: none;
+  border-radius: 15px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  color: #c49b63;
+  margin-bottom: 15px;
+}
+
+/************* MAPA *************/
+.map-container {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/************* FOOTER *************/
+.footer {
+  background: #1a1a1a;
+}
+
+.footer-icon {
+  font-size: 1.5rem;
+  color: white;
+  transition: 0.3s;
+}
+
+.footer-icon:hover {
+  color: #c49b63;
+  transform: translateY(-5px);
+}
+
+/************* SCROLL ANIMACIONES *************/
+.animate {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+.animate.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.delay-1 { transition-delay: .2s; }
+.delay-2 { transition-delay: .4s; }
+.delay-3 { transition-delay: .6s; }
