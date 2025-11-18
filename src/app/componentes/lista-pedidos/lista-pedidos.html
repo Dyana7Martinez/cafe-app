@@ -1,63 +1,23 @@
-<div class="container py-4">
+<div class="container mt-4">
+  <h3>Lista de Pedidos</h3>
 
-  <h2 class="text-center mb-4">📦 Lista de Pedidos</h2>
-
-  <!-- Loader -->
-  <div *ngIf="loading" class="text-center my-4">
-    <div class="spinner-border text-primary"></div>
-    <p>Cargando pedidos...</p>
-  </div>
-
-  <!-- Si NO hay pedidos -->
-  <div *ngIf="!loading && pedidos.length === 0" class="alert alert-info text-center">
+  <div *ngIf="pedidos.length === 0" class="alert alert-info">
     No hay pedidos registrados.
   </div>
 
-  <!-- SI hay pedidos -->
-  <div *ngIf="pedidos.length > 0">
+  <div *ngFor="let pedido of pedidos" class="card mb-3 shadow-sm">
+    <div class="card-body">
+      <h5>Usuario: {{ pedido.data.usuarioId }}</h5>
+      <p>Fecha: {{ pedido.data.timestamp | date:'short' }}</p>
+      <p>Total: ${{ pedido.data.totalPedido }}</p>
+      <ul>
+        <li *ngFor="let item of pedido.data.items">
+          {{ item.menu.nombre }} - Cantidad: {{ item.quantity }} - Total: ${{ item.total }}
+        </li>
+      </ul>
 
-    <table class="table table-bordered table-striped">
-      <thead class="thead-dark">
-        <tr>
-          <th>ID</th>
-          <th>Usuario</th>
-          <th>Fecha</th>
-          <th>Total</th>
-          <th>Items</th>
-          <th></th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr *ngFor="let pedido of pedidos">
-
-          <td>{{ pedido.id }}</td>
-
-          <td>{{ pedido.usuarioId }}</td>
-
-          <td>{{ pedido.timestamp | date:'short' }}</td>
-
-          <td><b>$ {{ pedido.totalPedido }}</b></td>
-
-          <td>
-            <ul class="list-unstyled">
-              <li *ngFor="let item of pedido.items">
-                ✔ {{ item.menu.name }} (x{{ item.quantity }})
-                — <b>$ {{ item.total }}</b>
-              </li>
-            </ul>
-          </td>
-
-          <td>
-            <button class="btn btn-danger btn-sm" (click)="eliminarPedido(pedido.id)">
-              <i class="fa fa-trash"></i> Eliminar
-            </button>
-          </td>
-
-        </tr>
-      </tbody>
-    </table>
-
+      <button class="btn btn-warning btn-sm me-2" (click)="editarPedido(pedido)">Editar</button>
+      <button class="btn btn-danger btn-sm" (click)="eliminarPedido(pedido.id)">Eliminar</button>
+    </div>
   </div>
-
 </div>

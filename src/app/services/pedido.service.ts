@@ -1,21 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { lastValueFrom } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { PedidoCarrito } from '../models/pedido-carrito.model';
+import { PedidoCarrito } from '../models/carrito-item.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PedidoService {
-  private baseUrl = 'https://cafeteria-app-72612-default-rtdb.firebaseio.com';
+  private baseUrl = "https://cafeteria-app-72612-default-rtdb.firebaseio.com"
 
   constructor(private httpClient: HttpClient) {}
 
-  getData(path: string = 'pedidos'): Observable<PedidoCarrito[]> {
+  // ✅ getData retorna Observable<any> para aceptar array, objeto o null
+  getData(path: string = 'pedidos'): Observable<any> {
     const url = `${this.baseUrl}/${path}.json`;
-    return this.httpClient.get<PedidoCarrito[]>(url).pipe(
+    return this.httpClient.get(url).pipe(
       catchError(error => {
         console.error('Error cargando pedidos:', error);
         throw error;

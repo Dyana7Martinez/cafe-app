@@ -3,7 +3,7 @@
     <div class="auth-form">
       <div class="card">
         <div class="card-body">
-          
+
           <div class="text-center mb-4">
             <div class="coffee-logo mb-3">
               <i class="fas fa-coffee fa-4x" style="color: #92694E;"></i>
@@ -13,60 +13,61 @@
           </div>
 
           <div class="text-center mt-4 mb-2">
-            <h3 class="mb-2" style="color: #5C3C92;">Bienvenido de Nuevo</h3> 
-            <p class="text-muted" style="font-size: 1.05em;">Ingresa tus credenciales para continuar</p>
+            <h3 class="mb-2" style="color: #5C3C92;">Bienvenido de Nuevo</h3>
+            <p class="text-muted">Ingresa tus credenciales para continuar</p>
           </div>
-          
-          <p class="text-center mb-4" style="color: #5C3C92; font-weight: 600; cursor: pointer;">Iniciar Sesión</p>
 
-          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            
+          <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" novalidate>
+
             <div class="mb-3">
               <input 
                 type="email" 
                 class="form-control" 
-                id="floatingInput" 
-                formControlName="email"
-                [class.is-invalid]="email?.invalid && email?.touched"
-                placeholder="Correo electrónico" />
-              <div class="invalid-feedback" *ngIf="email?.invalid && email?.touched">
-                {{ getFieldError('email') }}
+                name="email"
+                [(ngModel)]="model.email"
+                required
+                email
+                placeholder="Correo electrónico"
+                #emailInput="ngModel"
+                [class.is-invalid]="emailInput.invalid && emailInput.touched" />
+              <div class="text-danger small mt-1" *ngIf="emailInput.invalid && emailInput.touched">
+                Ingresa un correo válido
               </div>
             </div>
-            
+
             <div class="mb-3">
               <input 
                 type="password" 
                 class="form-control" 
-                id="password" 
-                formControlName="password"
-                [class.is-invalid]="password?.invalid && password?.touched"
-                placeholder="Contraseña" />
-              <div class="invalid-feedback" *ngIf="password?.invalid && password?.touched">
-                {{ getFieldError('password') }}
+                name="password"
+                [(ngModel)]="model.password"
+                required
+                minlength="6"
+                placeholder="Contraseña"
+                #passInput="ngModel"
+                [class.is-invalid]="passInput.invalid && passInput.touched" />
+              <div class="text-danger small mt-1" *ngIf="passInput.invalid && passInput.touched">
+                La contraseña es obligatoria
               </div>
             </div>
-            
-            <div class="d-flex justify-content-start mb-4">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
               <div class="form-check">
-                <input 
-                  class="form-check-input input-primary" 
-                  type="checkbox" 
-                  id="customCheckc1" 
-                  formControlName="rememberMe" />
-                <label class="form-check-label text-muted" for="customCheckc1">Recordarme</label>
+                <input class="form-check-input" type="checkbox" id="remember">
+                <label class="form-check-label text-muted" for="remember">Recordarme</label>
               </div>
             </div>
-            
+
             <div class="d-grid">
               <button 
                 type="submit" 
-                class="btn btn-primary"
-                [disabled]="isLoading">
+                class="btn btn-primary btn-lg"
+                [disabled]="isLoading || loginForm.invalid">
                 <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
                 {{ isLoading ? 'Iniciando...' : 'Iniciar Sesión' }}
               </button>
             </div>
+
           </form>
 
         </div>

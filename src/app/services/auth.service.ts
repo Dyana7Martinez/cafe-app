@@ -1,63 +1,53 @@
+// src/app/services/auth.service.ts
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, User } from '@angular/fire/auth';
-import { Observable, from, throwError } from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators';
-import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  user: User | null = null; // Usuario actual
 
-  constructor(private auth: Auth) {
-    // Escucha cambios de auth state al inicializar
-    onAuthStateChanged(this.auth, (user) => {
-      this.user = user;
-    });
+  constructor(private router: Router) {}
+
+  // Simulación de usuarios válidos (para que funcione YA)
+  private usuariosValidos = [
+    { email: 'admin@beanflow.com', password: '123456' },
+    { email: 'user@beanflow.com',   password: '123456' },
+    { email: 'test@beanflow.com',   password: '123456' }
+  ];
+
+  async login(email: string, password: string): Promise<boolean> {
+    // Simula delay de red
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    const usuario = this.usuariosValidos.find(u => u.email === email && u.password === password);
+
+    if (usuario) {
+      // GUARDA QUE ESTÁ LOGUEADO
+      localStorage.setItem('user', JSON.stringify({ email }));
+      localStorage.setItem('logueado', 'true');
+      
+      // Redirige al menú o dashboard
+      this.router.navigate(['/menu']);
+      return true;
+    } else {
+      alert('Correo o contraseña incorrectos');
+      return false;
+    }
   }
 
-  // Login
-  login(email: string, password: string): Observable<User | null> {
-    return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(
-      map(result => result.user),
-      tap(() => Swal.fire('¡Bienvenido!', 'Sesión iniciada.', 'success')),
-      catchError(error => {
-        Swal.fire('Error', `Login falló: ${error.message}`, 'error');
-        return throwError(() => error);
-      })
-    );
-  }
-
-  // Registro
-  register(email: string, password: string): Observable<User | null> {
-    return from(createUserWithEmailAndPassword(this.auth, email, password)).pipe(
-      map(result => result.user),
-      tap(() => Swal.fire('¡Registrado!', 'Cuenta creada. Inicia sesión.', 'success')),
-      catchError(error => {
-        Swal.fire('Error', `Registro falló: ${error.message}`, 'error');
-        return throwError(() => error);
-      })
-    );
-  }
-
-  // Logout
-  logout(): Observable<void> {
-    return from(signOut(this.auth)).pipe(
-      tap(() => {
-        this.user = null;
-        Swal.fire('Logout', 'Sesión cerrada.', 'info');
-      })
-    );
-  }
-
-  // ¿Está logueado? (para guards)
   isLoggedIn(): boolean {
-    return !!this.user;
+    return localStorage.getItem('logueado') === 'true';
   }
 
-  // Obtén user ID para guardar en pedidos (e.g., /pedidos/{userId})
-  getUserId(): string | null {
-    return this.user?.uid || null;
+  logout() {
+    localStorage.removeItem('user');
+    localStorage.removeItem('logueado');
+    this.router.navigate(['/login']);
+  }
+
+  getCurrentUser() {
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
   }
 }

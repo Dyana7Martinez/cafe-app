@@ -1,101 +1,113 @@
+// src/app/services/carrito.service.ts
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, firstValueFrom } from 'rxjs';
-import { PedidoService } from './pedido.service';
-import { Menu} from '../models/menu.model';
-import { PedidoCarrito } from '../models/pedido-carrito.model';
+import { BehaviorSubject } from 'rxjs';
 import Swal from 'sweetalert2';
+
+export class ItemCarrito {
+  producto: any;      // producto = { id, nombre, precio, imagen, ... }
+  cantidad: number;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarritoService {
 
-  private carrito: PedidoCarrito["items"] = [];
-  private carritoSubject = new BehaviorSubject<PedidoCarrito["items"]>([]);
+  private items: ItemCarrito[] = [];
+  private carritoSubject = new BehaviorSubject<ItemCarrito[]>([]);
+  carrito$ = this.carritoSubject.asObservable();
 
-  constructor(private pedidoService: PedidoService) {
-    const datos = localStorage.getItem("carrito");
-    if (datos) {
-      this.carrito = JSON.parse(datos);
-      this.carritoSubject.next(this.carrito);
-    }
+  constructor() {
+    this.cargarDelLocalStorage(); // Para mantener el carrito al recargar la página
   }
 
-  agregarProducto(menu: Menu, quantity: number = 1) {
+  // ========================================
+  // AGREGAR PRODUCTO
+  // ========================================
+  agregar(producto: any, cantidad: number = 1) {
+    const existe = this.items.find(i => i.producto.id === producto.id);
+    if (existe) {
+      existe.cantidad += cantidad;
+    } else {
+      this.items.push({ producto, cantidad });
+    }
 
-    if (quantity <= 0) {
-      Swal.fire("Error", "Cantidad inválida", "warning");
+    this.guardarEnLocalStorage();
+    this.actualizar();
+
+    Swal.fire({
+      toast: true,
+      position: 'top-end',
+      icon: 'success',
+      title: `${producto.nombre} agregado`,
+      showConfirmButton: false,
+      timer: 1500
+    });
+  }
+
+  // ========================================
+  // ELIMINAR PRODUCTO COMPLETO
+  // ========================================
+  remover(id: string) {
+    this.items = this.items.filter(i => i.producto.id !== id);
+    this.guardarEnLocalStorage();
+    this.actualizar();
+  }
+
+  // ========================================
+  // CAMBIAR CANTIDAD (+ / -)
+  // ========================================
+  actualizarCantidad(id: string, cantidad: number) {
+    if (cantidad <= 0) {
+      this.remover(id);
       return;
     }
-
-    const index = this.carrito.findIndex(item => item.menu.id === menu.id);
-    const subtotal = menu.price * quantity;
-
-    if (index >= 0) {
-      this.carrito[index].quantity += quantity;
-      this.carrito[index].total += subtotal;
-    } else {
-      this.carrito.push({
-        menu,
-        quantity,
-        total: subtotal
-      });
-    }
-
-    this.updateLocalStorage();
-    this.carritoSubject.next([...this.carrito]);
-
-    Swal.fire("Agregado", `${menu.name} agregado al carrito.`, "success");
-  }
-
-  obtenerCarrito(): Observable<PedidoCarrito["items"]> {
-    return this.carritoSubject.asObservable();
-  }
-
-  eliminarProducto(index: number) {
-    if (index >= 0 && index < this.carrito.length) {
-      this.carrito.splice(index, 1);
-      this.updateLocalStorage();
-      this.carritoSubject.next([...this.carrito]);
-      Swal.fire("Eliminado", "Producto eliminado del carrito.", "success");
+    const item = this.items.find(i => i.producto.id === id);
+    if (item) {
+      item.cantidad = cantidad;
+      this.guardarEnLocalStorage();
+      this.actualizar();
     }
   }
 
-  vaciarCarrito() {
-    this.carrito = [];
-    this.updateLocalStorage();
-    this.carritoSubject.next([]);
+  // ========================================
+  // VACIAR CARRITO
+  // ========================================
+  vaciar() {
+    this.items = [];
+    localStorage.removeItem('beanflow-carrito');
+    this.actualizar();
+  }
+
+  // ========================================
+  // GETTERS
+  // ========================================
+  getItems(): ItemCarrito[] {
+    return [...this.items];
   }
 
   getTotal(): number {
-    return this.carrito.reduce((sum, item) => sum + item.total, 0);
+    return this.items.reduce((t, i) => t + (i.producto.precio * i.cantidad), 0);
   }
 
-  async guardarPedido() {
-    try {
-      const total = this.getTotal();
-
-      const pedido = new PedidoCarrito();
-      pedido.items = [...this.carrito];
-      pedido.totalPedido = total;
-      pedido.timestamp = new Date().toISOString();
-      pedido.usuarioId = "anonimo";
-
-      await firstValueFrom(
-        this.pedidoService.createData("pedidos", pedido)
-      );
-
-      this.vaciarCarrito();
-
-      Swal.fire("Pedido Confirmado", `Total: $${total}`, "success");
-
-    } catch (error) {
-      console.error("Error al guardar pedido:", error);
-      Swal.fire("Error", "No se pudo guardar el pedido.", "error");
-    }
+  getCantidadItems(): number {
+    return this.items.reduce((sum, item) => sum + item.cantidad, 0);
   }
 
-  private updateLocalStorage() {
-    localStorage.setItem("carrito", JSON.stringify(this.carrito));
+  // ========================================
+  // LOCALSTORAGE (para persistencia)
+  // ========================================
+  private guardarEnLocalStorage() {
+    localStorage.setItem('beanflow-carrito', JSON.stringify(this.items));
+  }
+
+  private cargarDelLocalStorage() {
+    const data = localStorage.getItem('beanflow-carrito');
+    if (data) this.items = JSON.parse(data);
+    this.actualizar();
+  }
+
+  private actualizar() {
+    this.carritoSubject.next([...this.items]);
   }
 }

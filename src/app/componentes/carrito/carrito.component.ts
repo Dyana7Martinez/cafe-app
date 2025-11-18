@@ -7,13 +7,13 @@ import { PedidoService } from '../../services/pedido.service';
 import { PedidoCarrito, CarritoItem as PedidoItem } from '../../models/carrito-item.model';
 
 @Component({
-  selector: 'app-pedido',
+  selector: 'app-carrito',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './pedido.component.html',
-  styleUrls: ['./pedido.component.css']
+  templateUrl: './carrito.component.html',
+  styleUrls: ['./carrito.component.css']
 })
-export class PedidoComponent implements OnInit {
+export class CarritoComponent implements OnInit {
 
   carrito: ItemCarrito[] = [];
   nombreUsuario: string = '';
@@ -48,10 +48,10 @@ export class PedidoComponent implements OnInit {
       return;
     }
 
-    // Crear items del pedido
+    // Crear los items del pedido según tu modelo
     const itemsPedido: PedidoItem[] = this.carrito.map(i => new PedidoItem(i.producto, i.cantidad));
 
-    // Crear pedido completo
+    // Crear el pedido completo
     const pedido = new PedidoCarrito();
     pedido.items = itemsPedido;
     pedido.totalPedido = itemsPedido.reduce((sum, item) => sum + item.total, 0);

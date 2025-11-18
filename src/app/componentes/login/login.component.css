@@ -1,6 +1,5 @@
 /* 🛑 ESTILOS DE LAYOUT PARA CENTRADO Y FONDO */
 .auth-main {
-  /* Fondo claro */
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -10,103 +9,79 @@
 }
 
 .auth-wrapper {
-  /* Contenedor del formulario */
   max-width: 450px;
   width: 100%;
 }
-/* FIN DE ESTILOS DE LAYOUT */
 
----
-
-/* 🛑 ESTILOS DEL LOGO DE CAFÉ */
+/* 🛑 LOGO ANIMADO */
 .coffee-logo i {
-  /* Asumiendo que 'i' es el elemento del icono */
   filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
   animation: pulse 2s ease-in-out infinite;
 }
 
 @keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
 }
 
-/* 🛑 ESTILOS DEL CONTENEDOR PRINCIPAL DEL FORMULARIO (Tarjeta) */
+/* 🛑 TARJETA DEL FORMULARIO */
 .auth-form .card {
-  /* Estilo de la tarjeta blanca */
   border: none;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Sombra suave */
-  border-radius: 15px; /* Bordes redondeados */
-  padding: 30px; /* Añadir padding interior si es necesario */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  border-radius: 15px;
+  padding: 30px;
 }
 
-/* 🛑 ESTILOS DEL BOTÓN "Iniciar Sesión" */
+/* 🛑 BOTÓN */
 .auth-form .btn-primary {
-  /* Estilo del botón principal (marrón con gradiente) */
   background: linear-gradient(45deg, #6f4e37, #8b4513);
   border: none;
-  border-radius: 15px; /* Ajustar a un borde más cuadrado como en la imagen */
+  border-radius: 15px;
   font-weight: 600;
   padding: 12px;
   transition: all 0.3s ease;
-  width: 100%; /* Asegurar que el botón ocupe todo el ancho */
-  margin-top: 20px; /* Separación de los campos */
+  width: 100%;
+  margin-top: 20px;
 }
+
 .auth-form .btn-primary:hover {
-  /* Efecto al pasar el mouse */
   background: linear-gradient(45deg, #8b4513, #a0522d);
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-/* 🛑 ESTILOS DE LOS CAMPOS DE FORMULARIO */
+/* 🛑 INPUTS */
 .auth-form .form-control {
-  /* Estilo de los inputs */
   border-radius: 10px;
-  border: 1px solid #e9ecef; /* Ajustado a 1px para ser más sutil */
+  border: 1px solid #e9ecef;
   transition: border-color 0.3s ease;
-  padding: 12px 15px; /* Ajuste para mayor altura */
+  padding: 12px 15px;
 }
 
 .auth-form .form-control:focus {
-  /* Estilo al enfocar el input */
   border-color: #6f4e37;
   box-shadow: 0 0 0 0.2rem rgba(111, 78, 55, 0.25);
 }
 
-/* 🛑 ESTILOS ADICIONALES PARA TEXTOS Y ENLACES */
-.auth-form .text-center {
-  /* Para el título principal "Bienvenido de Nuevo" y subtítulos */
-  text-align: center;
-}
-
+/* 🛑 TEXTOS Y ENLACES */
 .auth-form .text-center h3 {
-  /* Estilo para "Bienvenido de Nuevo" */
-  color: #5c3c92; /* Color morado */
+  color: #5c3c92;
   font-weight: 700;
   margin-bottom: 5px;
 }
 
 .auth-form .text-center p {
-  /* Estilo para "Ingresa tus credenciales..." */
   color: #6c757d;
   margin-bottom: 25px;
 }
 
 .auth-form .forgot-password a {
-  /* Estilo para el enlace "Olvidé mi contraseña" o similar */
   color: #8b4513;
   text-decoration: none;
   font-size: 0.9em;
 }
 
 .auth-form .form-check-label {
-  /* Estilo para el texto del checkbox "Recordarme" */
   font-size: 0.9em;
   color: #6c757d;
 }
-
-/* Puedes necesitar ajustar los márgenes y paddings en tu HTML o agregar clases de utilidad de Bootstrap */

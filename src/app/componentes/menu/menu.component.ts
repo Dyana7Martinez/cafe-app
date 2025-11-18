@@ -1,79 +1,76 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { CarritoService } from '../../services/carrito.service';
+import { PedidoService } from '../../services/pedido.service';
 import Swal from 'sweetalert2';
-
-import { DataService } from '../../services/data.service';
-import { Producto } from '../../models/producto.model';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-  productos: Producto[] = [];
-  carrito: Producto[] = [];
-  categoriaSeleccionada: string = 'calientes';
+
+  categorias = ['bebidas-calientes', 'bebidas-frias', 'pasteleria'];
+  categoriaActiva = this.categorias[0];
+  productos: any[] = [];
+  pedido: any = {};
 
   constructor(
-    private dataService: DataService,
-    private router: Router
+    private carritoService: CarritoService,
+    private pedidoService: PedidoService
   ) {}
 
   ngOnInit(): void {
-    this.cargarProductos();
-    this.cargarCarrito();
+    // Productos de prueba para visualizar el menú
+    this.productos = [
+      { nombre: 'Café Latte', precio: 2.5, imagen: 'https://via.placeholder.com/300x200?text=Cafe', categoria: 'bebidas-calientes', descripcion: 'Delicioso café con leche' },
+      { nombre: 'Cappuccino', precio: 3.0, imagen: 'https://via.placeholder.com/300x200?text=Cappuccino', categoria: 'bebidas-calientes', descripcion: 'Café espumoso y delicioso' },
+      { nombre: 'Té Helado', precio: 2.0, imagen: 'https://via.placeholder.com/300x200?text=Te', categoria: 'bebidas-frias', descripcion: 'Refrescante té frío' },
+      { nombre: 'Smoothie de Fresa', precio: 3.5, imagen: 'https://via.placeholder.com/300x200?text=Smoothie', categoria: 'bebidas-frias', descripcion: 'Batido saludable y fresco' },
+      { nombre: 'Croissant', precio: 1.5, imagen: 'https://via.placeholder.com/300x200?text=Croissant', categoria: 'pasteleria', descripcion: 'Delicioso croissant recién horneado' },
+      { nombre: 'Muffin de Chocolate', precio: 2.0, imagen: 'https://via.placeholder.com/300x200?text=Muffin', categoria: 'pasteleria', descripcion: 'Muffin esponjoso y dulce' }
+    ];
   }
 
-  cargarProductos(): void {
-    this.dataService.getDataAsArray('productos').subscribe({
-      next: (data: Producto[]) => {
-        this.productos = data.length > 0 ? data : [
-          new Producto('1', 'Café Americano', 'Clásico y aromático', 2.5, 'https://via.placeholder.com/300x200', 'calientes'),
-          new Producto('2', 'Latte Macchiato', 'Leche cremosa', 3.5, 'https://via.placeholder.com/300x200', 'calientes'),
-        ];
+  productosDe(categoria: string) {
+    return this.productos.filter(p => p.categoria.toLowerCase() === categoria.toLowerCase());
+  }
+
+  abrirModal(producto: any) {
+    this.pedido = { ...producto, nombreUsuario: '', mesa: '', observaciones: '' };
+    const modalEl = document.getElementById('pedidoModal');
+    const modal = new bootstrap.Modal(modalEl);
+    modal.show();
+  }
+
+  guardarPedido() {
+    if (!this.pedido.nombreUsuario || !this.pedido.mesa) {
+      Swal.fire('Error', 'Nombre y número de mesa son obligatorios', 'error');
+      return;
+    }
+
+    // Guardar en Firebase usando tu PedidoService
+    this.pedidoService.createData('pedidos', this.pedido).subscribe({
+      next: () => {
+        Swal.fire('¡Pedido agregado a Firebase!', '', 'success');
       },
-      error: (error) => {
-        console.error('Error:', error);
-        Swal.fire('Error', 'No se pudieron cargar los productos', 'error');
+      error: (err) => {
+        Swal.fire('Error', 'No se pudo guardar el pedido', 'error');
+        console.error(err);
       }
     });
-  }
 
-  cambiarCategoria(cat: string): void {
-    this.categoriaSeleccionada = cat;
-  }
+    // También guardar en carrito local
+    this.carritoService.agregar(this.pedido);
 
-  getProductosPorCategoria(): Producto[] {
-    return this.productos.filter(p => p.categoria === this.categoriaSeleccionada);
-  }
-
-  agregarAlCarrito(producto: Producto): void {
-    const carritoGuardado = localStorage.getItem('carrito');
-    this.carrito = carritoGuardado ? JSON.parse(carritoGuardado) : [];
-    this.carrito.push({ ...producto });
-    localStorage.setItem('carrito', JSON.stringify(this.carrito));
-    Swal.fire('¡Agregado!', `${producto.nombre} añadido al carrito`, 'success');
-    this.cargarCarrito();
-  }
-
-  cargarCarrito(): void {
-    const carritoGuardado = localStorage.getItem('carrito');
-    this.carrito = carritoGuardado ? JSON.parse(carritoGuardado) : [];
-  }
-
-  verCarrito(): void {
-    if (this.carrito.length > 0) {
-      this.router.navigate(['/carrito']);
-    } else {
-      Swal.fire('Vacío', 'Agrega algo primero', 'info');
-    }
-  }
-
-  trackById(index: number, producto: Producto): string {
-    return producto.id;
+    // Cerrar modal
+    const modalEl = document.getElementById('pedidoModal');
+    const modal = bootstrap.Modal.getInstance(modalEl);
+    modal.hide();
   }
 }
