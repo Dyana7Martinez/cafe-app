@@ -1,8 +1,19 @@
+// src/app/componentes/lista-pedidos/lista-pedidos.component.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import Swal from 'sweetalert2';
 import { PedidoService } from '../../services/pedido.service';
-import { PedidoCarrito } from '../../models/carrito-item.model';
+import Swal from 'sweetalert2';
+
+interface Pedido {
+  id: string;
+  nombreUsuario: string;
+  mesa: string;
+  total: number;
+  estado: string;
+  fecha: string;
+  items: any[];
+  observaciones?: string;
+}
 
 @Component({
   selector: 'app-lista-pedidos',
@@ -13,7 +24,8 @@ import { PedidoCarrito } from '../../models/carrito-item.model';
 })
 export class ListaPedidosComponent implements OnInit {
 
-  pedidos: { id: string, data: PedidoCarrito }[] = [];
+  pedidos: Pedido[] = [];
+  cargando = true;
 
   constructor(private pedidoService: PedidoService) {}
 
@@ -22,50 +34,56 @@ export class ListaPedidosComponent implements OnInit {
   }
 
   cargarPedidos() {
-    this.pedidoService.getData('pedidos').subscribe((data: any) => {
-      if (data) {
-        this.pedidos = Object.keys(data).map(key => ({ id: key, data: data[key] }));
-      } else {
-        this.pedidos = [];
+    this.cargando = true;
+    this.pedidoService.getAll().subscribe({
+      next: (data) => {
+        this.pedidos = data;
+        this.cargando = false;
+      },
+      error: (err) => {
+        console.error('Error cargando pedidos:', err);
+        Swal.fire('Error', 'No se pudieron cargar los pedidos', 'error');
+        this.cargando = false;
       }
     });
   }
 
   eliminarPedido(id: string) {
     Swal.fire({
-      title: '¿Estás seguro?',
-      text: "No podrás revertir esto",
+      title: '¿Eliminar pedido?',
+      text: 'Esta acción no se puede deshacer',
       icon: 'warning',
       showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
       confirmButtonText: 'Sí, eliminar',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.pedidoService.deleteData('pedidos', id).subscribe(() => {
-          Swal.fire('Eliminado!', 'El pedido ha sido eliminado.', 'success');
+      this.pedidoService.delete(id).then(() => {
+          Swal.fire('¡Eliminado!', 'El pedido ha sido borrado.', 'success');
           this.cargarPedidos();
+        }).catch(() => {
+          Swal.fire('Error', 'No se pudo eliminar', 'error');
         });
       }
     });
   }
 
-  editarPedido(pedido: { id: string, data: PedidoCarrito }) {
-    Swal.fire({
-      title: 'Editar nombre de usuario',
-      input: 'text',
-      inputLabel: 'Nombre',
-      inputValue: pedido.data.usuarioId,
-      showCancelButton: true,
-      confirmButtonText: 'Guardar'
-    }).then((result) => {
-      if (result.isConfirmed && result.value) {
-        const pedidoActualizado = { ...pedido.data, usuarioId: result.value };
-        this.pedidoService.updateData('pedidos', pedido.id, pedidoActualizado)
-          .then(() => {
-            Swal.fire('Guardado!', 'El pedido ha sido actualizado.', 'success');
-            this.cargarPedidos();
-          });
-      }
-    });
+  cambiarEstado(pedido: Pedido, nuevoEstado: 'preparando' | 'listo' | 'entregado') {
+    this.pedidoService.update(pedido.id, { estado: nuevoEstado })
+      .then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Estado actualizado',
+          text: `Pedido ahora está: ${nuevoEstado.toUpperCase()}`,
+          timer: 2000,
+          showConfirmButton: false
+        });
+        this.cargarPedidos();
+      })
+      .catch(() => {
+        Swal.fire('Error', 'No se pudo actualizar el estado', 'error');
+      });
   }
 }

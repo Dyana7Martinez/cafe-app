@@ -3,9 +3,15 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import Swal from 'sweetalert2';
 
+// EXPORTAMOS LA CLASE PARA QUE TODOS LA VEAN
 export class ItemCarrito {
-  producto: any;      // producto = { id, nombre, precio, imagen, ... }
-  cantidad: number;
+  producto: any;
+  cantidad: number = 1;
+
+  constructor(producto: any, cantidad: number = 1) {
+    this.producto = producto;
+    this.cantidad = cantidad;
+  }
 }
 
 @Injectable({
@@ -15,23 +21,22 @@ export class CarritoService {
 
   private items: ItemCarrito[] = [];
   private carritoSubject = new BehaviorSubject<ItemCarrito[]>([]);
-  carrito$ = this.carritoSubject.asObservable();
+  public carrito$ = this.carritoSubject.asObservable();
+
+  private readonly KEY_CLIENTE = 'beanflow_ultimo_cliente';
+  private readonly KEY_CARRITO = 'beanflow_carrito';
 
   constructor() {
-    this.cargarDelLocalStorage(); // Para mantener el carrito al recargar la página
+    this.cargarDelLocalStorage();
   }
 
-  // ========================================
-  // AGREGAR PRODUCTO
-  // ========================================
   agregar(producto: any, cantidad: number = 1) {
     const existe = this.items.find(i => i.producto.id === producto.id);
     if (existe) {
       existe.cantidad += cantidad;
     } else {
-      this.items.push({ producto, cantidad });
+      this.items.push(new ItemCarrito(producto, cantidad));
     }
-
     this.guardarEnLocalStorage();
     this.actualizar();
 
@@ -45,18 +50,12 @@ export class CarritoService {
     });
   }
 
-  // ========================================
-  // ELIMINAR PRODUCTO COMPLETO
-  // ========================================
   remover(id: string) {
     this.items = this.items.filter(i => i.producto.id !== id);
     this.guardarEnLocalStorage();
     this.actualizar();
   }
 
-  // ========================================
-  // CAMBIAR CANTIDAD (+ / -)
-  // ========================================
   actualizarCantidad(id: string, cantidad: number) {
     if (cantidad <= 0) {
       this.remover(id);
@@ -70,40 +69,55 @@ export class CarritoService {
     }
   }
 
-  // ========================================
-  // VACIAR CARRITO
-  // ========================================
   vaciar() {
     this.items = [];
-    localStorage.removeItem('beanflow-carrito');
+    localStorage.removeItem(this.KEY_CARRITO);
     this.actualizar();
   }
 
-  // ========================================
-  // GETTERS
-  // ========================================
   getItems(): ItemCarrito[] {
     return [...this.items];
   }
 
   getTotal(): number {
-    return this.items.reduce((t, i) => t + (i.producto.precio * i.cantidad), 0);
+    return this.items.reduce((total, item) => total + (item.producto.precio * item.cantidad), 0);
   }
 
   getCantidadItems(): number {
     return this.items.reduce((sum, item) => sum + item.cantidad, 0);
   }
 
-  // ========================================
-  // LOCALSTORAGE (para persistencia)
-  // ========================================
+  // DATOS DEL CLIENTE
+  guardarDatosCliente(nombre: string, mesa: string, observaciones: string = '') {
+    const datos = {
+      nombreUsuario: nombre.trim(),
+      mesa: mesa.trim(),
+      observaciones: observaciones.trim()
+    };
+    localStorage.setItem(this.KEY_CLIENTE, JSON.stringify(datos));
+  }
+
+  obtenerDatosCliente(): any {
+    const data = localStorage.getItem(this.KEY_CLIENTE);
+    return data ? JSON.parse(data) : null;
+  }
+
+  // LOCALSTORAGE
   private guardarEnLocalStorage() {
-    localStorage.setItem('beanflow-carrito', JSON.stringify(this.items));
+    localStorage.setItem(this.KEY_CARRITO, JSON.stringify(this.items));
   }
 
   private cargarDelLocalStorage() {
-    const data = localStorage.getItem('beanflow-carrito');
-    if (data) this.items = JSON.parse(data);
+    const data = localStorage.getItem(this.KEY_CARRITO);
+    if (data) {
+      try {
+        const parsed = JSON.parse(data);
+        this.items = parsed.map((i: any) => new ItemCarrito(i.producto, i.cantidad));
+      } catch (e) {
+        console.error('Error cargando carrito', e);
+        this.items = [];
+      }
+    }
     this.actualizar();
   }
 

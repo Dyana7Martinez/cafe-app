@@ -1,73 +1,93 @@
-<div class="container mt-4">
+<div class="container py-5 menu-container">
+  <h1 class="text-center display-4 fw-bold mb-5 title">Nuestro menu</h1>
 
-  <!-- Pestañas de categorías -->
-  <ul class="nav nav-tabs mb-3">
-    <li class="nav-item" *ngFor="let cat of categorias">
-      <a class="nav-link" [class.active]="cat === categoriaActiva" (click)="categoriaActiva = cat">
-        {{cat | titlecase}}
-      </a>
-    </li>
-  </ul>
+  <div class="categories d-flex justify-content-center gap-4 mb-5 flex-wrap">
+    <button *ngFor="let cat of categorias"
+            class="category-btn"
+            [class.active]="categoriaActual === cat.id"
+            (click)="categoriaActual = cat.id">
+      {{ cat.nombre }}
+    </button>
+  </div>
 
-  <!-- Productos de la categoría activa -->
-  <div class="list-group">
-    <div class="list-group-item mb-3 shadow-sm p-3" *ngFor="let producto of productosDe(categoriaActiva)">
-      <div class="row align-items-center">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5">
+    <div class="col" *ngFor="let p of productosFiltrados">
+      <div class="product-card shadow">
+        <img [src]="p.imagen" class="product-img" alt="{{p.nombre}}">
 
-        <!-- Imagen del producto -->
-        <div class="col-md-4">
-          <img [src]="producto.imagen"
-               class="img-fluid rounded"
-               alt="{{producto.nombre}}"
-               style="height:180px; object-fit:cover; width:100%;">
+        <div class="product-body">
+          <h5 class="product-title">{{ p.nombre }}</h5>
+          <p class="product-desc">{{ p.descripcion }}</p>
+
+          <div class="product-actions">
+            <div class="product-price">${{ p.precio }}</div>
+
+            <div class="action-buttons">
+              <div class="counter">
+                <button class="counter-btn minus"
+                        (click)="$event.stopPropagation(); decrementar(p)"
+                        [disabled]="obtenerCantidad(p) <= 1">−</button>
+                <span class="counter-value">{{ obtenerCantidad(p) }}</span>
+                <button class="counter-btn plus"
+                        (click)="$event.stopPropagation(); incrementar(p)">+</button>
+              </div>
+
+              <button class="btn-elegir" (click)="abrirModal(p)">
+                Elegir
+              </button>
+            </div>
+          </div>
         </div>
-
-        <!-- Información del producto -->
-        <div class="col-md-5">
-          <h5 class="mb-1">{{producto.nombre}}</h5>
-          <p class="mb-1">$ {{producto.precio}}</p>
-          <p class="text-muted mb-1">{{producto.descripcion}}</p>
-        </div>
-
-        <!-- Botón agregar -->
-        <div class="col-md-3 text-end">
-          <button class="btn btn-primary" (click)="abrirModal(producto)">
-            <i class="fas fa-plus me-1"></i> Agregar
-          </button>
-        </div>
-
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal para agregar detalles del pedido -->
 <div class="modal fade" id="pedidoModal" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Detalles del pedido</h5>
-        <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content modal-custom">
+
+      <div class="modal-header-custom">
+        <h5 class="modal-title w-100 text-center">
+          {{ productoSeleccionado?.nombre }}
+        </h5>
+        <button type="button" class="btn-close btn-close-white" (click)="cancelar()"></button>
       </div>
-      <div class="modal-body">
-        <form #pedidoForm="ngForm">
-          <div class="mb-2">
-            <label>Nombre</label>
-            <input type="text" class="form-control" [(ngModel)]="pedido.nombreUsuario" name="nombreUsuario" required>
+
+      <div class="modal-body p-5 text-center">
+        <img [src]="productoSeleccionado?.imagen" class="modal-img" alt="">
+
+        <h3 class="modal-price">$ {{ productoSeleccionado?.precio }}</h3>
+        <div class="quantity-badge">Cantidad: {{ cantidad }}</div>
+
+        <div class="row g-4 mt-4">
+          <div class="col-12">
+            <input type="text" class="form-control input-custom"
+                   [(ngModel)]="nombreUsuario"
+                   placeholder="Tu nombre">
           </div>
-          <div class="mb-2">
-            <label>Mesa</label>
-            <input type="number" class="form-control" [(ngModel)]="pedido.mesa" name="mesa" required>
+
+          <div class="col-12">
+            <input type="text" class="form-control input-custom"
+                   [(ngModel)]="mesa"
+                   placeholder="Número de mesa">
           </div>
-          <div class="mb-2">
-            <label>Observaciones</label>
-            <textarea class="form-control" [(ngModel)]="pedido.observaciones" name="observaciones"></textarea>
+
+          <div class="col-12">
+            <textarea class="form-control textarea-custom" rows="3"
+                      [(ngModel)]="observaciones"
+                      placeholder="Observaciones (opcional)">
+            </textarea>
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button class="btn btn-primary" (click)="guardarPedido()">Guardar</button>
+        </div>
+
+        <div class="modal-footer-custom">
+          <button class="btn-cancel" (click)="cancelar()">Cancelar</button>
+          <button class="btn-add" (click)="agregarConCantidad()">
+            Agregar al carrito ({{ cantidad }})
+          </button>
+        </div>
+
       </div>
     </div>
   </div>

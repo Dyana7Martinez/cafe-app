@@ -14,8 +14,8 @@
           <p>Precio: ${{item.producto.precio}}</p>
           <p>
             Cantidad:
-            <input type="number" min="1" [(ngModel)]="item.cantidad"
-                   (change)="cambiarCantidad(item, item.cantidad)" style="width:60px;">
+           
+          <input type="number" [(ngModel)]="item.cantidad" min="1" class="form-control">
           </p>
         </div>
       </div>

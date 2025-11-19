@@ -1,24 +1,7 @@
-table img {
-  object-fit: cover;
+.card {
+  border-radius: 15px;
+  overflow: hidden;
 }
-
-.table th, .table td {
-  vertical-align: middle;
-}
-
-h2 {
-  font-weight: 700;
-  color: #5a3825;
-}
-
-.btn-danger {
-  background-color: #c0392b;
-}
-
-.btn-success {
-  background-color: #27ae60;
-}
-
-.btn-secondary {
-  background-color: #7f8c8d;
+.btn-group .btn {
+  min-width: 40px;
 }
