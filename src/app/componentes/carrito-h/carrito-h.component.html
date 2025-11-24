@@ -1,0 +1,47 @@
+<div class="card shadow-lg mb-5">
+  <div class="card-body">
+    <h4>Mesa {{ pedido.cliente.mesa }} - {{ pedido.cliente.nombre }}</h4>
+    <p class="text-muted" *ngIf="pedido.cliente.observaciones">
+      Notas del cliente: {{ pedido.cliente.observaciones }}
+    </p>
+
+    <hr>
+
+    <div *ngFor="let item of pedido.productos; let i = index" class="d-flex align-items-center mb-3 pb-3 border-bottom">
+      <img [src]="item.producto.imagen || 'assets/cafe-default.jpg'" 
+           class="me-3 rounded" style="width:80px;height:80px;object-fit:cover;">
+
+      <div class="flex-grow-1">
+        <h5>{{ item.producto.nombre }}</h5>
+        <p class="mb-0">${{ item.producto.precio }} × {{ item.cantidad }}</p>
+        <small *ngIf="item.observaciones">Observaciones: {{ item.observaciones }}</small>
+      </div>
+
+      <!-- Acciones: editar y eliminar -->
+      <div class="d-flex gap-2 ms-3">
+        <button class="btn btn-warning btn-sm" title="Editar observaciones" (click)="editarObservaciones(i)">
+          <i class="bi bi-pencil"></i>
+        </button>
+        <button class="btn btn-danger btn-sm" title="Eliminar producto" (click)="eliminar(item.producto.id!)">
+          <i class="bi bi-trash-fill"></i>
+        </button>
+      </div>
+
+      <strong class="ms-4 text-success">
+        ${{ (item.producto.precio * item.cantidad).toFixed(2) }}
+      </strong>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mt-4 pt-4 border-top">
+      <h2 class="text-success">Total: ${{ pedido.total.toFixed(2) }}</h2>
+      <div>
+        <button class="btn btn-outline-danger me-3" (click)="vaciar()">
+          <i class="bi bi-trash"></i> Vaciar
+        </button>
+        <button class="btn btn-success btn-lg" (click)="confirmarPedido()">
+          Confirmar Pedido
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

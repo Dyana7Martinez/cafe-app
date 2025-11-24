@@ -1,31 +1,20 @@
-// src/app/componentes/lista-pedidos/lista-pedidos.component.ts
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { PedidoService } from '../../services/pedido.service';
+import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
-
-interface Pedido {
-  id: string;
-  nombreUsuario: string;
-  mesa: string;
-  total: number;
-  estado: string;
-  fecha: string;
-  items: any[];
-  observaciones?: string;
-}
+import { PedidoService } from '../../services/pedido.service';
+import { Pedido, Cliente } from '../../models/pedido.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-lista-pedidos',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './lista-pedidos.html',
   styleUrls: ['./lista-pedidos.css']
 })
 export class ListaPedidosComponent implements OnInit {
-
-  pedidos: Pedido[] = [];
-  cargando = true;
+  pedidos: { key: string, pedido: Pedido }[] = [];
+  estados = ['pendiente', 'en cocina', 'entregado'];
 
   constructor(private pedidoService: PedidoService) {}
 
@@ -34,56 +23,44 @@ export class ListaPedidosComponent implements OnInit {
   }
 
   cargarPedidos() {
-    this.cargando = true;
-    this.pedidoService.getAll().subscribe({
-      next: (data) => {
-        this.pedidos = data;
-        this.cargando = false;
+    this.pedidoService.obtenerPedidos().subscribe({
+      next: (data: any) => {
+        this.pedidos = [];
+        for (const key in data) {
+          if (data.hasOwnProperty(key)) {
+            const raw = data[key];
+            const cliente = new Cliente(raw.cliente.nombre, raw.cliente.mesa, raw.cliente.observaciones);
+            const pedido = new Pedido(cliente);
+            pedido.reconstruir(raw);
+            this.pedidos.push({ key, pedido });
+          }
+        }
       },
-      error: (err) => {
-        console.error('Error cargando pedidos:', err);
-        Swal.fire('Error', 'No se pudieron cargar los pedidos', 'error');
-        this.cargando = false;
-      }
+      error: err => console.error('Error al cargar pedidos:', err)
     });
   }
 
-  eliminarPedido(id: string) {
+  cambiarEstado(item: { key: string, pedido: Pedido }, nuevoEstado: string) {
+    item.pedido.estado = nuevoEstado;
+    this.pedidoService.actualizarPedido(item.key, item.pedido).subscribe({
+      next: () => this.cargarPedidos(),
+      error: err => console.error('Error al actualizar estado:', err)
+    });
+  }
+
+  eliminarPedido(item: { key: string, pedido: Pedido }) {
     Swal.fire({
-      title: '¿Eliminar pedido?',
-      text: 'Esta acción no se puede deshacer',
+      title: 'Eliminar pedido?',
+      text: 'No se puede deshacer',
       icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Sí, eliminar',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
+      showCancelButton: true
+    }).then(result => {
       if (result.isConfirmed) {
-      this.pedidoService.delete(id).then(() => {
-          Swal.fire('¡Eliminado!', 'El pedido ha sido borrado.', 'success');
-          this.cargarPedidos();
-        }).catch(() => {
-          Swal.fire('Error', 'No se pudo eliminar', 'error');
+        this.pedidoService.eliminarPedido(item.key).subscribe({
+          next: () => this.cargarPedidos(),
+          error: err => console.error('Error al eliminar pedido:', err)
         });
       }
     });
-  }
-
-  cambiarEstado(pedido: Pedido, nuevoEstado: 'preparando' | 'listo' | 'entregado') {
-    this.pedidoService.update(pedido.id, { estado: nuevoEstado })
-      .then(() => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Estado actualizado',
-          text: `Pedido ahora está: ${nuevoEstado.toUpperCase()}`,
-          timer: 2000,
-          showConfirmButton: false
-        });
-        this.cargarPedidos();
-      })
-      .catch(() => {
-        Swal.fire('Error', 'No se pudo actualizar el estado', 'error');
-      });
   }
 }

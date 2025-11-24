@@ -1,0 +1,98 @@
+.carrito-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+  max-width: 550px;
+  margin: 20px auto;
+  border-left: 8px solid #8b5e34;
+}
+
+.carrito-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cliente-nombre {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4b2e15;
+}
+
+.cliente-mesa {
+  background: #8b5e34;
+  padding: 5px 12px;
+  color: white;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.carrito-body {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.carrito-img img {
+  width: 100px;
+  height: 100px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+.carrito-info h4 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #3e2a13;
+}
+
+.precio {
+  color: #8b5e34;
+  font-weight: bold;
+  margin: 4px 0;
+}
+
+.cantidad-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cantidad-box button {
+  background: #8b5e34;
+  color: white;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.eliminar-btn {
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #b43c3c;
+}
+
+.confirmar-btn {
+  width: 100%;
+  margin-top: 15px;
+  padding: 12px;
+  background: #4e342e;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: 0.2s;
+}
+
+.confirmar-btn:hover {
+  background: #3b241e;
+}

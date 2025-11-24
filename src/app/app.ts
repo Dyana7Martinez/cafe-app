@@ -1,77 +1,68 @@
 // src/app/app.component.ts
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 
+import { AuthService } from './services/auth.service';
 import { CarritoService } from './services/carrito.service';
+import { Pedido } from './models/pedido.model';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterOutlet,
-    RouterLink,
-  ],
+  imports: [CommonModule, RouterModule],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css']
 })
 export class AppComponent implements OnInit {
 
   logueado = false;
-  email = '';
-  cantidadCarrito = 0; // ahora SE ACTUALIZA AUTOMÁTICAMENTE
+  rol: string | null = null;
+  cantidadCarrito = 0;
 
   constructor(
-    private router: Router,
-    private carritoService: CarritoService
+    private authService: AuthService,
+    private carritoService: CarritoService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    // ============================
-    //   INICIALIZAR FIREBASE
-    // ============================
+    // Inicializar Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyCvUynQ4rK4xTKC8yvF0mFRvzVFXcAYBX4",
       authDomain: "cafeteria-app-72612.firebaseapp.com",
+      databaseURL: "https://cafeteria-app-72612-default-rtdb.firebaseio.com",
       projectId: "cafeteria-app-72612",
-      storageBucket: "cafeteria-app-72612.appspot.com",
-      messagingSenderId: "1087741282351",
-      appId: "1:1087741282351:web:8c5d3e8f9b8e8f9b8e8f9b"
+      storageBucket: "cafeteria-app-72612.firebasestorage.app",
+      messagingSenderId: "641915931229",
+      appId: "1:641915931229:web:391b001044d93073b05bb4",
+      measurementId: "G-LV60DLCE7J"
     };
 
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
 
-    // ============================
-    //   DETECTAR LOGIN
-    // ============================
-    const user = localStorage.getItem('user');
-    if (user) {
-      const userData = JSON.parse(user);
-      this.logueado = true;
-      this.email = userData.email || 'Usuario';
-    }
+    // Estado de autenticación
+    this.logueado = this.authService.isLogged();
+    this.rol = this.authService.getRol();
 
-    // ============================
-    //   SUSCRIPCIÓN AL CARRITO
-    // ============================
-    this.carritoService.carrito$.subscribe(items => {
-      this.cantidadCarrito = items.reduce((sum, item) => sum + item.cantidad, 0);
+    // Suscribirse al carrito para calcular cantidad total
+    this.carritoService.carrito$.subscribe((pedido: Pedido | null) => {
+      this.cantidadCarrito = pedido ? pedido.productos.reduce(
+        (total, item) => total + item.cantidad,
+        0
+      ) : 0;
     });
   }
 
-  // =============================
-  //   CERRAR SESIÓN
-  // =============================
-  logout() {
-    localStorage.removeItem('user');
+  logout(): void {
+    this.authService.logout();
     this.logueado = false;
-    this.email = '';
+    this.rol = null;
     this.cantidadCarrito = 0;
     this.router.navigate(['/login']);
   }

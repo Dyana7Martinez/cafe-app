@@ -1,83 +1,121 @@
-/************* GLOBAL FIX *************/
-body { padding-top: 70px; }
-
-/************* HERO + PARALLAX *************/
-.hero {
-  min-height: calc(100vh - 70px);
-  background: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085') center/cover fixed no-repeat;
+.hero-section {
+  background: linear-gradient(135deg, #6f4e37 0%, #8b4513 50%, #a0522d 100%);
   position: relative;
-  display: flex;
   overflow: hidden;
+  padding-top: 80px;
 }
 
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+.hero-section .hero-content,
+.hero-section .hero-image {
+  position: relative;
+  z-index: 2;
 }
 
-.hero-img {
-  max-height: 480px;
-  border-radius: 20px;
-  object-fit: cover;
-  opacity: 0;
-  transform: translateY(30px);
+.coffee-cup-animation {
+  animation: float 3s ease-in-out infinite;
 }
 
-/************* FEATURE CARDS *************/
-.feature-card {
-  padding: 30px;
-  border: none;
-  border-radius: 15px;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+.coffee-cup-animation i {
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
 }
 
-.feature-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
 }
 
-.feature-icon {
-  font-size: 3rem;
-  color: #c49b63;
-  margin-bottom: 15px;
+.navbar {
+  transition: all 0.3s ease;
 }
 
-/************* MAPA *************/
-.map-container {
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
-/************* FOOTER *************/
-.footer {
-  background: #1a1a1a;
-}
-
-.footer-icon {
+.navbar .navbar-brand {
   font-size: 1.5rem;
-  color: white;
-  transition: 0.3s;
+  color: #6f4e37 !important;
 }
 
-.footer-icon:hover {
-  color: #c49b63;
+.navbar .navbar-brand i {
+  color: #d4a574;
+}
+
+.navbar .nav-link {
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+  color: #6f4e37 !important;
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important;
 }
 
-/************* SCROLL ANIMACIONES *************/
-.animate {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: all 0.8s ease;
+.feature-icon i { transition: transform 0.3s ease; }
+.feature-icon:hover i { transform: scale(1.1); }
+
+.contact-item i { color: #ffc107; }
+
+.social-links a {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  transition: all 0.3s ease;
 }
 
-.animate.show {
-  opacity: 1;
-  transform: translateY(0);
+.social-links a:hover {
+  background: #ffc107;
+  color: #000 !important;
+  transform: translateY(-3px);
 }
 
-.delay-1 { transition-delay: .2s; }
-.delay-2 { transition-delay: .4s; }
-.delay-3 { transition-delay: .6s; }
+@media (max-width: 768px) {
+  .hero-section .display-4 { font-size: 2.5rem; }
+  .coffee-cup-animation i { font-size: 6rem !important; }
+  .navbar-brand { font-size: 1.25rem !important; }
+}
+
+.btn {
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.btn-warning {
+  background: linear-gradient(45deg, #ffc107, #ffb300);
+  border: none;
+  color: #000;
+}
+
+.btn-warning:hover {
+  background: linear-gradient(45deg, #ffb300, #ff8f00);
+  color: #000;
+}
+
+html { scroll-behavior: smooth; }
+
+.hero-image {
+  /* Usando la ruta absoluta desde la raíz del servidor (el '/') */
+  background-image: url('/assets/images/producto/background-coffee.jpg'); 
+  
+  /* Asegúrate de que las propiedades siguientes estén definidas
+     para que la imagen se muestre correctamente: */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh; /* O la altura deseada para el contenedor */
+  border-radius: 15px;
+}

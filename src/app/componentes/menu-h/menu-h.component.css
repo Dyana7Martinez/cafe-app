@@ -1,0 +1,20 @@
+.menu-card {
+  transition: transform 0.3s;
+  border: 3px solid #987b67; /* color café de tu cafetería */
+  border-radius: 16px;        /* bordes redondeados */
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(139, 75, 42, 0.2); /* sombra suave */
+}
+
+.menu-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px rgba(139, 75, 42, 0.3); /* sombra más intensa al pasar el mouse */
+}
+
+.menu-card-img {
+  height: 180px; /* altura uniforme de imagen */
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}

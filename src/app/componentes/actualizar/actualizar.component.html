@@ -1,25 +1,45 @@
-<div class="container mt-4" *ngIf="producto">
-  <h2>Actualizar Producto</h2>
-  <div class="form-group">
-    <label>Nombre</label>
-    <input [(ngModel)]="producto.nombre" class="form-control">
+<div class="container mt-4" *ngIf="pedido">
+  <h2>Actualizar Pedido</h2>
+
+  <p><strong>Cliente:</strong> {{ pedido.cliente.nombre }}</p>
+  <p><strong>Mesa:</strong> {{ pedido.cliente.mesa }}</p>
+
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Precio</th>
+        <th>Observaciones</th>
+        <th>Subtotal</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of pedido.productos; let i = index">
+        <td>{{ item.producto.nombre }}</td>
+        <td><input type="number" min="1" class="form-control"
+                   [(ngModel)]="item.cantidad"
+                   (ngModelChange)="cambiarCantidad(i, item.cantidad)"></td>
+        <td>${{ item.producto.precio }}</td>
+        <td>{{ item.observaciones }}</td>
+        <td>${{ (item.producto.precio * item.cantidad).toFixed(2) }}</td>
+        <td><button class="btn btn-danger btn-sm" (click)="eliminarProducto(i)">
+              <i class="bi bi-trash"></i>
+            </button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p><strong>Total:</strong> ${{ pedido.total.toFixed(2) }}</p>
+
+  <div class="mb-3">
+    <label>Estado:</label>
+    <select class="form-select w-auto" [(ngModel)]="pedido.estado">
+      <option *ngFor="let e of estados" [value]="e">{{ e }}</option>
+    </select>
   </div>
-  <div class="form-group">
-    <label>Descripción</label>
-    <input [(ngModel)]="producto.descripcion" class="form-control">
-  </div>
-  <div class="form-group">
-    <label>Precio</label>
-    <input [(ngModel)]="producto.precio" type="number" class="form-control">
-  </div>
-  <div class="form-group">
-    <label>Imagen URL</label>
-    <input [(ngModel)]="producto.imagen" class="form-control">
-  </div>
-  <div class="form-group">
-    <label>Categoría</label>
-    <input [(ngModel)]="producto.categoria" class="form-control">
-  </div>
-  <button (click)="guardarCambios()" class="btn btn-primary">Guardar</button>
+
+  <button class="btn btn-success me-2" (click)="actualizar()">Guardar Cambios</button>
+  <button class="btn btn-secondary" routerLink="/lista-pedidos">Cancelar</button>
 </div>
-<div *ngIf="!producto" class="text-center">Cargando...</div>

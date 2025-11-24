@@ -1,72 +1,47 @@
-// src/app/services/pedido.service.ts
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, lastValueFrom } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/database';
+import { Pedido } from '../models/pedido.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PedidoService {
+  private dbRef = firebase.database().ref('pedidos');
 
-  private baseUrl = "https://cafeteria-app-72612-default-rtdb.firebaseio.com";
+  constructor() {}
 
-  constructor(private http: HttpClient) { }
-
-  // GET: Obtener todos los pedidos (convierte el objeto de Firebase a array)
-  getAll(): Observable<any[]> {
-    return this.http.get<{ [key: string]: any }>(`${this.baseUrl}/pedidos.json`)
-      .pipe(
-        map(data => {
-          if (!data) return [];
-          return Object.keys(data).map(key => ({
-            id: key,
-            ...data[key]
-          }));
-        }),
-        catchError(err => {
-          console.error('Error cargando pedidos:', err);
-          throw err;
-        })
-      );
+  crearPedido(pedido: Pedido): Observable<void> {
+    return new Observable(observer => {
+      const newRef = this.dbRef.push();
+      newRef.set(pedido)
+        .then(() => { observer.next(); observer.complete(); })
+        .catch(err => observer.error(err));
+    });
   }
 
-  // POST: Crear nuevo pedido
-  create(pedido: any): Promise<any> {
-    return lastValueFrom(
-      this.http.post(`${this.baseUrl}/pedidos.json`, pedido)
-        .pipe(
-          map(res => {
-            console.log('Pedido creado:', res);
-            return res;
-          }),
-          catchError(err => {
-            console.error('Error creando pedido:', err);
-            throw err;
-          })
-        )
-    );
+  obtenerPedidos(): Observable<any> {
+    return new Observable(observer => {
+      this.dbRef.on('value', snapshot => {
+        observer.next(snapshot.val());
+      }, err => observer.error(err));
+    });
   }
 
-  // PUT: Actualizar pedido (estado: pendiente → preparando → listo)
-  update(id: string, data: any): Promise<any> {
-    return lastValueFrom(
-      this.http.put(`${this.baseUrl}/pedidos/${id}.json`, data)
-        .pipe(catchError(err => {
-          console.error('Error actualizando:', err);
-          throw err;
-        }))
-    );
+  actualizarPedido(key: string, pedido: Pedido): Observable<void> {
+    return new Observable(observer => {
+      this.dbRef.child(key).set(pedido)
+        .then(() => { observer.next(); observer.complete(); })
+        .catch(err => observer.error(err));
+    });
   }
 
-  // DELETE: Eliminar pedido
-  delete(id: string): Promise<any> {
-    return lastValueFrom(
-      this.http.delete(`${this.baseUrl}/pedidos/${id}.json`)
-        .pipe(catchError(err => {
-          console.error('Error eliminando:', err);
-          throw err;
-        }))
-    );
+  eliminarPedido(key: string): Observable<void> {
+    return new Observable(observer => {
+      this.dbRef.child(key).remove()
+        .then(() => { observer.next(); observer.complete(); })
+        .catch(err => observer.error(err));
+    });
   }
 }

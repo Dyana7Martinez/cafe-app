@@ -1,37 +1,6 @@
-.actualizar-container {
-  max-width: 650px;
-}
-
-.title-actualizar {
-  font-weight: bold;
-  color: #4b4b4b;
-}
-
 .card {
   border-radius: 12px;
-  background: #ffffff;
 }
-
-.img-preview {
-  width: 180px;
-  height: 180px;
+img {
   object-fit: cover;
-  border-radius: 12px;
-  border: 2px solid #ddd;
-}
-
-button.btn-primary {
-  padding: 10px 25px;
-  font-weight: bold;
-}
-
-button.btn-secondary {
-  padding: 10px 25px;
-}
-
-@media (max-width: 480px) {
-  .img-preview {
-    width: 140px;
-    height: 140px;
-  }
 }

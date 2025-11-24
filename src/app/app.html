@@ -1,70 +1,46 @@
-<nav class="navbar navbar-expand-lg cafe-navbar shadow-sm">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
+
   <div class="container">
+  <a class="navbar-brand fw-bold text-warning d-flex align-items-center" routerLink="/">
+  <i class="fas fa-coffee me-2"></i>
+  <span>BeanFlow</span>
+</a>
 
-    <!-- Logo -->
-    <a class="navbar-brand fw-bold" routerLink="/">
-      <i class="fas fa-mug-hot me-2"></i> BeanFlow
-    </a>
-
-    <!-- Botón Responsive -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
-
-    <!-- Menú -->
+    
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-
         <li class="nav-item">
-          <a class="nav-link" routerLink="/">Inicio</a>
+          <a class="nav-link" routerLink="/" routerLinkActive="active">Inicio</a>
         </li>
-
+        <li class="nav-item" *ngIf="rol === 'cliente' || !rol">
+          <a class="nav-link" routerLink="/menu" routerLinkActive="active">Menú</a>
+        </li>
+        <li class="nav-item" *ngIf="rol === 'cliente' || !rol">
+          <a class="nav-link" routerLink="/carrito" routerLinkActive="active">Carrito</a>
+        </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/menu">Menú</a>
+          <a class="nav-link" routerLink="/pedidos" routerLinkActive="active">Pedido</a>
         </li>
-
-        <!-- Carrito con icono y contador -->
-        <li class="nav-item position-relative">
-          <a class="nav-link" routerLink="/carrito">
-            <i class="fas fa-shopping-cart"></i>
-            Carrito
-
-            <span 
-              *ngIf="cantidadCarrito > 0"
-              class="badge bg-danger rounded-pill position-absolute top-0 start-100 translate-middle">
-              {{ cantidadCarrito }}
-            </span>
-          </a>
-           </li>
-        
-         <li class="nav-item">
-          <a class="nav-link" routerLink="/pedido">Pedido</a>
-        </li>
-        
-         <li class="nav-item">
-          <a class="nav-link" routerLink="/lista-pedido">Lista Pedido</a>
-        </li>
-
         <li class="nav-item">
-          <a class="nav-link" routerLink="/sobre-nosotros">Sobre Nosotros</a>
+          <a class="nav-link" routerLink="/sobre-nosotros" routerLinkActive="active">Sobre Nosotros</a>
         </li>
-
         <li class="nav-item">
-          <a class="nav-link" routerLink="/contacto">Contacto</a>
+          <a class="nav-link" routerLink="/contacto" routerLinkActive="active">Contacto</a>
         </li>
-
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/login">Iniciar sesión</a>
+        <li class="nav-item" *ngIf="!logueado">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
         </li>
-
+        <li class="nav-item" *ngIf="logueado">
+          <a class="nav-link text-warning fw-bold" style="cursor: pointer;" (click)="logout()">Cerrar sesión</a>
+        </li>
       </ul>
     </div>
   </div>
 </nav>
 
-<div class="container mt-4">
-  <router-outlet></router-outlet>
-  <p class="small text-white-50">
-      © 2025 BeanFlow — Todos los derechos reservados.
-    </p>
-</div>
+<!-- Aquí se cargan los componentes según la ruta -->
+<router-outlet></router-outlet>

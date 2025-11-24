@@ -1,6 +1,68 @@
-.sobre-container { background: #f8f9fa; }
-h1 { color: #8B4513; font-size: 2.5rem; }
-.contact-section { background: #1976D2; border-radius: 15px; }
-.form-control { border-radius: 10px; border: none; }
-.btn-warning { background: #FFD700 !important; color: #8B4513 !important; border-radius: 10px; }
-.row { justify-content: center; }
+.sobre-nosotros {
+  padding: 80px 30px;
+  position: relative;
+  overflow: hidden;
+  background-color: #fff; /* se integra con el fondo de la página */
+}
+
+.text-brown {
+  color: #5b3a29;
+  font-family: 'Georgia', serif;
+  font-weight: 700;
+}
+
+.sobre-nosotros .lead {
+  font-size: 1.2rem;
+  color: #6b4a32;
+}
+
+.sobre-nosotros p,
+.sobre-nosotros li {
+  color: #5a4332;
+  line-height: 1.6;
+}
+
+.sobre-nosotros ul li::before {
+  content: "•";
+  color: #d8a45a;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
+  margin-left: -1em;
+}
+
+.sobre-nosotros img {
+  object-fit: cover;
+  width: 100%;
+  border-radius: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sobre-nosotros img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+/* Elementos decorativos */
+.decor-top {
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  width: 150px;
+  opacity: 0.2;
+}
+
+.decor-bottom {
+  position: absolute;
+  bottom: -50px;
+  right: -50px;
+  width: 150px;
+  opacity: 0.2;
+}
+
+/* Responsive */
+@media(max-width: 992px){
+  .decor-top, .decor-bottom {
+    display: none;
+  }
+}

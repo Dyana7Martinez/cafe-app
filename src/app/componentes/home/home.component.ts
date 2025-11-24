@@ -1,12 +1,19 @@
+// home.component.ts
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { RouterLink, RouterOutlet } from '@angular/router';  // ← Importa así
+import { CommonModule } from '@angular/common';           // ← Importa así
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [
+    CommonModule, // ← Aquí sí van
+    RouterLink
+],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {}
+export class HomeComponent {
+  // tu código
+}

@@ -1,93 +1,66 @@
+<!-- src/app/componentes/menu/menu.component.html -->
 <div class="container py-5 menu-container">
-  <h1 class="text-center display-4 fw-bold mb-5 title">Nuestro menu</h1>
+  <h1 class="text-center display-4 fw-bold mb-5 text-amber-900">Nuestro Menú</h1>
 
-  <div class="categories d-flex justify-content-center gap-4 mb-5 flex-wrap">
+  <!-- Categorías -->
+  <div class="categories d-flex justify-content-center gap-3 mb-5 flex-wrap">
     <button *ngFor="let cat of categorias"
-            class="category-btn"
+            class="category-btn px-4 py-2 rounded-pill fw-bold shadow-sm"
             [class.active]="categoriaActual === cat.id"
-            (click)="categoriaActual = cat.id">
+            (click)="filtrarCategoria(cat.id)">
       {{ cat.nombre }}
     </button>
   </div>
 
-  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-5">
-    <div class="col" *ngFor="let p of productosFiltrados">
-      <div class="product-card shadow">
-        <img [src]="p.imagen" class="product-img" alt="{{p.nombre}}">
-
-        <div class="product-body">
-          <h5 class="product-title">{{ p.nombre }}</h5>
-          <p class="product-desc">{{ p.descripcion }}</p>
-
-          <div class="product-actions">
-            <div class="product-price">${{ p.precio }}</div>
-
-            <div class="action-buttons">
-              <div class="counter">
-                <button class="counter-btn minus"
-                        (click)="$event.stopPropagation(); decrementar(p)"
-                        [disabled]="obtenerCantidad(p) <= 1">−</button>
-                <span class="counter-value">{{ obtenerCantidad(p) }}</span>
-                <button class="counter-btn plus"
-                        (click)="$event.stopPropagation(); incrementar(p)">+</button>
-              </div>
-
-              <button class="btn-elegir" (click)="abrirModal(p)">
-                Elegir
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+  <!-- Grid de productos -->
+  <div class="row g-4">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3" *ngFor="let p of productosFiltrados">
+      <app-menu-h 
+        [producto]="p"
+        [cantidad]="obtenerCantidad(p)"
+        (elegir)="abrirModal(p)"
+        (incrementar)="incrementar(p)"
+        (decrementar)="decrementar(p)">
+      </app-menu-h>
     </div>
   </div>
 </div>
 
+<!-- MODAL DETALLE PRODUCTO -->
 <div class="modal fade" id="pedidoModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content modal-custom">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-4 overflow-hidden shadow-xl border-0">
 
-      <div class="modal-header-custom">
-        <h5 class="modal-title w-100 text-center">
-          {{ productoSeleccionado?.nombre }}
-        </h5>
-        <button type="button" class="btn-close btn-close-white" (click)="cancelar()"></button>
+      <div class="bg-amber-700 text-white p-4 text-center position-relative">
+        <h3 class="mb-0">{{ productoSeleccionado?.nombre }}</h3>
+        <button type="button" 
+                class="btn-close btn-close-white position-absolute top-50 end-0 translate-middle-y me-4"
+                (click)="cerrarModal()"
+                aria-label="Close"></button>
       </div>
 
-      <div class="modal-body p-5 text-center">
-        <img [src]="productoSeleccionado?.imagen" class="modal-img" alt="">
+      <div class="modal-body text-center p-4">
+        <img [src]="productoSeleccionado?.imagen || 'assets/placeholder.jpg'" 
+             class="rounded-3 shadow mb-4" 
+             style="height:220px; width:100%; object-fit:cover;">
 
-        <h3 class="modal-price">$ {{ productoSeleccionado?.precio }}</h3>
-        <div class="quantity-badge">Cantidad: {{ cantidad }}</div>
+        <h2 class="text-amber-800 fw-bold mb-4">${{ productoSeleccionado?.precio }}</h2>
 
-        <div class="row g-4 mt-4">
-          <div class="col-12">
-            <input type="text" class="form-control input-custom"
-                   [(ngModel)]="nombreUsuario"
-                   placeholder="Tu nombre">
-          </div>
+        <input [(ngModel)]="nombreUsuario" placeholder="Tu nombre" class="form-control mb-3"
+               [disabled]="!!carritoService.getCliente()?.nombre">
+        <input [(ngModel)]="mesa" placeholder="Número de mesa" class="form-control mb-3"
+               [disabled]="!!carritoService.getCliente()?.mesa">
+        <textarea [(ngModel)]="observaciones" placeholder="Ej: Sin azúcar, para llevar..." class="form-control mb-4" rows="2"></textarea>
 
-          <div class="col-12">
-            <input type="text" class="form-control input-custom"
-                   [(ngModel)]="mesa"
-                   placeholder="Número de mesa">
-          </div>
-
-          <div class="col-12">
-            <textarea class="form-control textarea-custom" rows="3"
-                      [(ngModel)]="observaciones"
-                      placeholder="Observaciones (opcional)">
-            </textarea>
-          </div>
-        </div>
-
-        <div class="modal-footer-custom">
-          <button class="btn-cancel" (click)="cancelar()">Cancelar</button>
-          <button class="btn-add" (click)="agregarConCantidad()">
+        <div class="d-flex justify-content-center gap-4">
+          <button class="btn btn-outline-danger px-5 py-3 rounded-pill fw-bold" (click)="cerrarModal()">
+            Cancelar
+          </button>
+          <button class="btn px-5 py-3 rounded-pill text-white fw-bold" style="background-color:#8B4513; border:2px solid #5C3317;"
+                  (click)="agregarYlimpiar()">
             Agregar al carrito ({{ cantidad }})
           </button>
         </div>
-
       </div>
     </div>
   </div>

@@ -1,7 +1,61 @@
-.card {
-  border-radius: 15px;
-  overflow: hidden;
+.titulo-bean {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  color: #4b2e2b;
 }
-.btn-group .btn {
-  min-width: 40px;
+
+.mesa-header {
+  background: #e7ddd3;
+  padding: 12px 18px;
+  border-left: 6px solid #8b5e34;
+  border-radius: 10px;
+}
+
+.tarjeta-mesa {
+  border-radius: 16px;
+  border: 1px solid #e1d5c9;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.tarjeta-mesa:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+}
+
+.cliente-nombre {
+  color: #4b2e2b;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.producto-card {
+  background: #faf7f3;
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.producto-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 14px;
+  object-fit: cover;
+  border: 2px solid #d8c4b2;
+}
+
+.precio-final {
+  font-weight: bold;
+  color: #5b3524;
+}
+
+.total-mesa {
+  color: #3c2418;
+  font-weight: 800;
+  text-align: right;
+}
+.table td, .table th {
+  vertical-align: middle;
+}
+
+.btn i {
+  font-size: 1.1rem;
 }
