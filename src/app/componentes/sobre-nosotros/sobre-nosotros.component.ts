@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Para *ngIf, *ngFor si usas
 import Swal from 'sweetalert2'; // Para alerts si necesitas
 
-import { DataService } from '../../services/data.service'; // Ajusta path
+import { DataService } from '../../services/data.service'; 
 
 @Component({
   selector: 'app-sobre-nosotros',

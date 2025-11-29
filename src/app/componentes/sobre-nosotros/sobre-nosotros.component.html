@@ -1,58 +1,125 @@
-<section class="sobre-nosotros py-5 position-relative overflow-hidden">
-  <!-- Elementos decorativos flotantes -->
-  <div class="decorativo">
-    <img src="assets/coffee-bean1.svg" class="decor-float decor1" alt="Grano de café">
-    <img src="assets/coffee-bean2.svg" class="decor-float decor2" alt="Grano de café">
-    <img src="assets/coffee-leaf.svg" class="decor-float decor3" alt="Hoja de café">
-    <img src="assets/pet-icon.svg" class="decor-float decor4" alt="Icono peludito">
-  </div>
+<section class="about-us-v3 position-relative overflow-hidden bg-light" aria-label="Acerca de BeanFlow, el origen de tus mejores momentos">
 
-  <div class="container">
-    <!-- Título principal -->
-    <div class="text-center mb-5 fade-in-up">
-      <h1 class="text-brown fw-bold">Sobre BeanFlow</h1>
-      <p class="lead text-muted">Pasión, aroma y momentos memorables en cada taza ☕</p>
+    <div class="hero-product-section position-relative py-5">
+        <div class="hero-bg-overlay-v3 w-100 h-100 position-absolute top-0 start-0" 
+             style="background-image: url('https://thevespersband.com/wp-content/uploads/2021/02/coffee-801781_1920.jpg'); 
+                    background-size: cover; background-position: center;" 
+             aria-hidden="true">
+        </div>
+        <div class="hero-overlay-v2 container py-5 py-md-6 position-relative text-center text-white">
+            <h1 class="display-1 fw-bolder text-shadow-lg mb-3 letter-spacing-sm font-primary animate__animated animate__fadeInDown">BEANFLOW</h1>
+            <h2 class="display-5 text-warning mb-4 fst-italic font-secondary animate__animated animate__fadeInUp animate__delay-1s">"El Origen de tus Mejores Momentos"</h2>
+            <p class="lead text-shadow-lg mx-auto mb-5 text-shadow-lg animate__animated animate__fadeInUp animate__delay-2s" style="max-width: 700px;">
+                Desde la semilla hasta tu taza, nuestra misión es cultivar la pasión, el arte y la calidad en cada gota de café.
+            </p>
+            <a routerLink="/menu" class="btn btn-brown btn-lg fw-bold px-5 shadow-lg hover-scale animate__animated animate__zoomIn animate__delay-3s">Descubre la Experiencia</a>
+        </div>
     </div>
 
-    <!-- Historia y valores -->
-    <div class="row align-items-center mb-5 fade-in-left">
-      <div class="col-lg-6 mb-4 mb-lg-0">
-        <img src="assets/cafeteria-interior.jpg" alt="Nuestra historia" class="img-fluid rounded shadow-lg hover-zoom">
-      </div>
-      <div class="col-lg-6">
-        <h2 class="text-brown mb-3">Nuestra Historia</h2>
-        <p class="text-muted mb-3">
-          Desde 2018, BeanFlow nació con la pasión de compartir momentos cálidos y auténticos a través del café. 
-          Cada taza refleja cuidado, sabor y dedicación, buscando que cada visita sea especial.
-        </p>
-        <p class="text-muted mb-4">
-          Creamos una comunidad de amantes del café donde cada detalle importa y cada visita se convierte en un recuerdo.
-        </p>
-        <ul class="list-unstyled text-muted">
-          <li class="mb-2"><strong>Calidad:</strong> Gran selección de granos y técnicas artesanales.</li>
-          <li class="mb-2"><strong>Ambiente:</strong> Espacios acogedores para disfrutar solo o acompañado.</li>
-          <li class="mb-2"><strong>Pasión:</strong> Cada taza refleja nuestra dedicación al café.</li>
-        </ul>
-      </div>
+    <section class="videos container py-5 my-5">
+        <h2 class="display-4 fw-bold text-dark-brown text-center mb-5 font-primary animate__animated animate__fadeIn">El Arte del Barista</h2>
+        <div class="row g-4 gx-5 justify-content-center">
+            
+            <div class="col-lg-6 col-md-6 animate__animated animate__fadeInUp"> 
+                <div class="video rounded-4 shadow-xl border-coffee overflow-hidden p-2 bg-white">
+                    <iframe 
+                        src="https://www.youtube.com/embed/HlPyr8-IQm8"
+
+                        title="Tutorial para dibujar la Roseta en Latte Art" 
+                        title="Latte Art Tulip Tutorial for Beginners" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen 
+                        class="w-100 ratio ratio-9x16">
+                    </iframe>
+                    <p class="text-center fw-bold text-dark-brown mt-2">✨ Tutorial de Latte Art (Tulipán) para Principiantes</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-6 col-md-6 animate__animated animate__fadeInUp animate__delay-1s"> 
+                <div class="video rounded-4 shadow-xl border-coffee overflow-hidden p-2 bg-white">
+                    <iframe 
+                        src="https://www.youtube.com/embed/PaZXGTRW5MI" 
+                        title="How to make a flat white" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen 
+                        class="w-100 ratio ratio-9x16">
+                    </iframe>
+                    <p class="text-center fw-bold text-dark-brown mt-2">☕ Cómo preparar un auténtico Flat White</p>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <div class="bg-brown-light py-5">
+        <div class="container py-5 text-center">
+            <span class="text-uppercase text-dark-brown fw-bold sub-title">Nuestros Pilares</span>
+            <h2 class="display-5 fw-bold text-dark-brown mb-5 font-primary">Un Compromiso con la Excelencia</h2>
+            <div class="row g-4">
+                <div class="col-md-4 animate__animated animate__fadeInUp animate__delay-1s">
+                    <div class="p-4 bg-white rounded-4 shadow-hover-lg h-100 transition-300">
+                        <i class="bi bi-globe display-4 text-warning mb-3"></i>
+                        <h4 class="fw-bold text-dark-brown">Sostenibilidad</h4>
+                        <p class="text-secondary">Trabajamos con agricultores que priorizan prácticas justas y ecológicas.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 animate__animated animate__fadeInUp animate__delay-2s">
+                    <div class="p-4 bg-white rounded-4 shadow-hover-lg h-100 transition-300">
+                        <i class="bi bi-award display-4 text-warning mb-3"></i>
+                        <h4 class="fw-bold text-dark-brown">Maestría</h4>
+                        <p class="text-secondary">Nuestros baristas son expertos dedicados a la ciencia y el arte del espresso.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 animate__animated animate__fadeInUp animate__delay-3s">
+                    <div class="p-4 bg-white rounded-4 shadow-hover-lg h-100 transition-300">
+                        <i class="bi bi-hand-thumbs-up display-4 text-warning mb-3"></i>
+                        <h4 class="fw-bold text-dark-brown">Comunidad</h4>
+                        <p class="text-secondary">Somos el tercer lugar: un espacio de conexión, trabajo y relajación.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Sección Peluditos -->
-    <div class="row align-items-center fade-in-right">
-      <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
-        <h2 class="text-brown mb-3">Amamos a los Peluditos 🐾</h2>
-        <p class="text-muted mb-3">
-          Nuestra cafetería es pet-friendly y celebramos cada visita de tus amigos peluditos. 
-          Cada rincón está pensado para que todos se sientan cómodos y felices.
-        </p>
-        <ul class="list-unstyled text-muted">
-          <li class="mb-2"><strong>Espacios cómodos:</strong> Para tus mascotas y para ti.</li>
-          <li class="mb-2"><strong>Cariño y cuidado:</strong> Cada visita es especial para ellos también.</li>
-          <li class="mb-2"><strong>Comunidad:</strong> Un lugar para compartir con amigos y peluditos.</li>
-        </ul>
-      </div>
-      <div class="col-lg-6 order-lg-1">
-        <img src="assets/peluditos-cafe.jpg" alt="Amamos a los peluditos" class="img-fluid rounded shadow-lg hover-zoom">
-      </div>
+    <div class="position-relative pet-friendly-section py-5 my-5 overflow-hidden">
+        <div class="pet-friendly-bg-v3 w-100 h-100 position-absolute top-0 start-0" 
+             style="background-image: url('https://images.unsplash.com/photo-1548061291-a83d72492f44?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTY5fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.0.3&q=80&w=1080');" 
+             aria-hidden="true">
+        </div>
+        <div class="container py-5 position-relative text-center">
+            <i class="bi bi-heart-fill display-4 text-dark-brown mb-3 pulsate animate__animated animate__pulse animate__infinite"></i>
+            
+            <h2 class="display-4 fw-bold text-dark-brown mb-3 font-primary animate__animated animate__fadeInUp">Amamos a los Peluditos 🐾</h2>
+            
+            <p class="lead text-dark-brown mx-auto mb-4 animate__animated animate__fadeInUp animate__delay-1s" style="max-width: 600px;">
+                ¡BeanFlow es pet-friendly! Tráenos a tu mejor amigo. Tenemos agua fresca y un ambiente relajado para que disfruten juntos.
+            </p>
+
+            <div class="row g-3 justify-content-center mt-4 mb-5">
+                <div class="col-6 col-sm-4 col-md-3 animate__animated animate__zoomIn animate__delay-3s">
+                    <img src="https://www.beanscenemag.com.au/wp-content/uploads/2025/05/AdobeStock_1047752315-1024x707.jpeg" 
+                         class="img-fluid rounded-circle shadow-lg border border-3 border-white hover-scale" 
+                         alt="">
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 animate__animated animate__zoomIn animate__delay-4s">
+                    <img src="https://static-media.hotmart.com/0HMaIB4h1P-vyFTHIGJx-ooxfSA=/399x375/filters:quality(100)/hotmart/checkout_custom/f988f27d-3611-4756-9c68-297642c137d7/perra2.png" 
+                         class="img-fluid rounded-circle shadow-lg border border-3 border-white hover-scale" 
+                         alt="">
+                </div>
+                <div class="col-6 col-sm-4 col-md-3 animate__animated animate__zoomIn animate__delay-5s">
+                    <img src="https://i.insider.com/656f50400ec98e92f74c3232?width=700" 
+                         class="img-fluid rounded-circle shadow-lg border border-3 border-white hover-scale" 
+                         alt="">
+                </div>
+            </div>
+           <p class="lead text-dark-brown fst-italic mx-auto mb-4 animate__animated animate__fadeInUp animate__delay-1-5s" style="max-width: 600px; font-size: 1rem;">
+    🐾🐾 **Importante:** Por la seguridad de todos, le pedimos mantener a su mascota **siempre con correa** y **a su lado** en todo momento. 🐾🐾
+</p>
+            <a routerLink="/contacto" class="btn btn-brown btn-lg fw-bold px-5 hover-scale animate__animated animate__zoomIn animate__delay-6s">¡Visítanos!</a>
+        </div>
     </div>
-  </div>
+
 </section>
+

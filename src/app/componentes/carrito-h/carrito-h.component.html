@@ -13,7 +13,7 @@
 
       <div class="flex-grow-1">
         <h5>{{ item.producto.nombre }}</h5>
-        <p class="mb-0">${{ item.producto.precio }} × {{ item.cantidad }}</p>
+        <p class="mb-0">${{ item.producto.precio }}  {{ item.cantidad }}</p>
         <small *ngIf="item.observaciones">Observaciones: {{ item.observaciones }}</small>
       </div>
 

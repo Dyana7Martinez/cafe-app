@@ -1,11 +1,9 @@
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark custom-navbar">
-
   <div class="container">
-  <a class="navbar-brand fw-bold text-warning d-flex align-items-center" routerLink="/">
-  <i class="fas fa-coffee me-2"></i>
-  <span>BeanFlow</span>
-</a>
+    <a class="navbar-brand fw-bold text-warning d-flex align-items-center" routerLink="/">
+      <i class="fas fa-coffee me-2"></i>
+      <span>BeanFlow</span>
+    </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
@@ -14,27 +12,29 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/" routerLinkActive="active">Inicio</a>
+          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
         </li>
-        <li class="nav-item" *ngIf="rol === 'cliente' || !rol">
+        <li class="nav-item">
           <a class="nav-link" routerLink="/menu" routerLinkActive="active">Menú</a>
         </li>
-        <li class="nav-item" *ngIf="rol === 'cliente' || !rol">
+        <li class="nav-item">
           <a class="nav-link" routerLink="/carrito" routerLinkActive="active">Carrito</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/pedidos" routerLinkActive="active">Pedido</a>
+          <a class="nav-link" routerLink="/lista-pedidos" routerLinkActive="active">Pedido</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/sobre-nosotros" routerLinkActive="active">Sobre Nosotros</a>
+          <a class="nav-link" routerLink="/sobre-nosotros" routerLinkActive="active">Nosotros</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/contacto" routerLinkActive="active">Contacto</a>
         </li>
-        <li class="nav-item" *ngIf="!logueado">
-          <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
+
+        <!-- Login / Logout -->
+        <li class="nav-item" *ngIf="!estaLogueado()">
+        <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
         </li>
-        <li class="nav-item" *ngIf="logueado">
+        <li class="nav-item" *ngIf="estaLogueado()">
           <a class="nav-link text-warning fw-bold" style="cursor: pointer;" (click)="logout()">Cerrar sesión</a>
         </li>
       </ul>
@@ -42,5 +42,44 @@
   </div>
 </nav>
 
-<!-- Aquí se cargan los componentes según la ruta -->
 <router-outlet></router-outlet>
+
+<footer class="bg-dark text-white text-center py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h5>Sobre Nosotros</h5>
+        <p class="lead text-shadow-lg mx-auto mb-5 text-shadow-lg animate__animated animate__fadeInUp animate__delay-2s" style="max-width: 700px;">
+    En BeanFlow, la excelencia se combina con el corazón. Como cafetería, somos expertos dedicados a la ciencia y el arte del café.
+</p>
+      </div>
+
+      <div class="col-md-4">
+        <h5>Enlaces</h5>
+        <ul class="list-unstyled">
+          <li><a href="/" class="text-white">Inicio</a></li>
+          <li><a href="/home" class="text-white">Home</a></li>
+          <li><a href="/menu" class="text-white">Menú</a></li>
+           <li><a href="/sobre-nosotros" class="text-white"> Nosotros</a></li>
+          <li><a href="/contacto" class="text-white">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-4">
+        <h5>Contáctanos</h5>
+        <p><i class="fa-solid fa-phone"></i> +503 2285-7930</p>
+        <p><i class="fa-solid fa-envelope"></i> contactocvk.com</p>
+        <div class="d-flex justify-content-center">
+          <a href="#" class="text-white mx-2"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#" class="text-white mx-2"><i class="fa-brands fa-twitter"></i></a>
+          <a href="#" class="text-white mx-2"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-3">
+      <p>&copy; 2025  - Cafeteria BeanFlow. Todos los derechos reservados.        </p>
+    </div>
+  </div>
+</footer>
+
