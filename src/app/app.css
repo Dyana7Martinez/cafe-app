@@ -10,6 +10,49 @@
 .navbar-brand i {
   color: #FFD700; /* dorado también para el icono */
 }
+/* Pega esto en tu styles.css o footer.component.css */
+footer {
+  background: linear-gradient(135deg, #6a4e0b 0%, #6a4e0b 100%) !important;
+  color: #f1dab8 !important;            /* crema clarito */
+  padding-top: 20px;
+  padding-bottom: 10px;
+  position: relative;
+  overflow: hidden;
+}
 
+/* Fondo sutil de granitos de café (opcional pero queda brutal) */
+
+
+/* Texto más legible y bonito */
+footer h5 {
+  color: #fff !important;
+  font-weight: 800;
+}
+
+footer p, footer a, footer li {
+  color: #f1dab8 !important;
+  transition: all 0.3s;
+}
+
+footer a:hover {
+  color: #fff !important;
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+/* Línea separadora suave */
+footer hr {
+  border-color: rgba(255,255,255,0.15);
+}
+
+/* El copy final más bonito */
+footer .text-center small {
+  color: #d4b89b !important;
+  font-size: 0.9rem;
+}
+footer .text-center small span {
+  color: #fff;
+  font-weight: 100;
+}
 
 

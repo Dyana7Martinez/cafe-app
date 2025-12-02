@@ -19,38 +19,53 @@
 
           <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" novalidate>
 
+            <!-- Email -->
             <div class="mb-3">
-              <input 
-                type="email" 
-                class="form-control" 
-                name="email"
-                [(ngModel)]="model.email"
-                required
-                email
-                placeholder="Correo electrónico"
-                #emailInput="ngModel"
-                [class.is-invalid]="emailInput.invalid && emailInput.touched" />
+              <label>Correo electrónico</label>
+              <div class="input-container" style="position: relative;">
+               
+
+                <input 
+                  type="email" 
+                  class="form-control ps-4"
+                  name="email"
+                  ngModel
+                  required
+                  email
+                  placeholder="@beanflow.com"
+                  #emailInput="ngModel"
+                  [class.is-invalid]="emailInput.invalid && emailInput.touched">
+              </div>
+
               <div class="text-danger small mt-1" *ngIf="emailInput.invalid && emailInput.touched">
                 Ingresa un correo válido
               </div>
             </div>
 
+            <!-- Password -->
             <div class="mb-3">
-              <input 
-                type="password" 
-                class="form-control" 
-                name="password"
-                [(ngModel)]="model.password"
-                required
-                minlength="6"
-                placeholder="Contraseña"
-                #passInput="ngModel"
-                [class.is-invalid]="passInput.invalid && passInput.touched" />
+              <label>Contraseña</label>
+              <div class="input-container" style="position: relative;">
+               
+
+                <input 
+                  type="password" 
+                  class="form-control ps-4"
+                  name="password"
+                  ngModel
+                  required
+                  minlength="6"
+                  placeholder="********"
+                  #passInput="ngModel"
+                  [class.is-invalid]="passInput.invalid && passInput.touched">
+              </div>
+
               <div class="text-danger small mt-1" *ngIf="passInput.invalid && passInput.touched">
                 La contraseña es obligatoria
               </div>
             </div>
 
+            <!-- Remember -->
             <div class="d-flex justify-content-between align-items-center mb-4">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="remember">
@@ -58,14 +73,9 @@
               </div>
             </div>
 
+            <!-- Botón -->
             <div class="d-grid">
-              <button 
-                type="submit" 
-                class="btn btn-primary btn-lg"
-                [disabled]="isLoading || loginForm.invalid">
-                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
-                {{ isLoading ? 'Iniciando...' : 'Iniciar Sesión' }}
-              </button>
+            <button type="submit" class="btn btn-primary">Iniciar Sesion</button>
             </div>
 
           </form>

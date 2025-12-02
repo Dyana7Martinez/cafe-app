@@ -1,8 +1,42 @@
-/* src/app/components/menu/menu.component.css */
+:host, body, .menu-container {
+  background: 
+    linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)), /* capa blanca suave encima */
+    url('/assets/img/coffee-beans-bg.jpg') center center / 600px repeat fixed;
+  min-height: 100vh;
+}
 
+
+
+
+
+
+
+
+.categories {
+  margin-bottom: 100px !important;   /* ← espacio hermoso arriba de los productos */
+}
+
+@media (max-width: 576px) {
+  .categories { 
+    margin-bottom: 80px !important;   /* menos en móvil para que no quede vacío */
+  }
+}
+.col-12,
+.col-sm-6,
+.col-md-4,
+.col-lg-3 {
+  margin-bottom: 80px !important;   /* ← Este es el que hace toda la magia */
+}
+
+/* En pantallas grandes puedes darle aún más aire (opcional pero queda de lujo) */
+@media (min-width: 992px) {
+  .col-lg-3 {
+    margin-bottom: 110px !important;
+  }
+}
 /* FONDO GENERAL */
 :host, body {
-  background: linear-gradient(135deg, #f7f3ec 0%, #ede1d1 100%) !important;
+  background: linear-gradient(135deg, #5d523e 0%, #82735f 100%) !important;
   min-height: 100vh;
 }
 
@@ -29,7 +63,9 @@
   min-width: 200px;
 }
 
-.category-btn:hover { transform: translateY(-5px); }
+.category-btn:hover { 
+  transform: translateY(-5px); 
+}
 .category-btn.active {
   background: #8B4513 !important;
   color: white !important;
@@ -41,23 +77,37 @@
 .product-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
-  gap: 40px;
+  gap: 30px 40px;           /* Espacio moderado entre columnas y filas */
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 60px;
+  
 }
 
-@media (min-width: 640px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (min-width: 1280px) { .product-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 640px) { 
+  .product-grid { 
+    grid-template-columns: repeat(2, 1fr); 
+  } 
+}
+@media (min-width: 1024px) { 
+  .product-grid { 
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px 50px;
+  } 
+}
+@media (min-width: 1280px) { 
+  .product-grid { 
+    grid-template-columns: repeat(4, 1fr);
+    gap: 50px 60px;
+  } 
+}
 
+/* TARJETAS CON ESPACIO VERTICAL PERFECTO */
 .product-card {
-  background: white;
+  background: #f8f1e9;                    /* Fondo crema elegante (cambié el gris) */
   border-radius: 32px;
   overflow: hidden;
   box-shadow: 0 15px 35px rgba(0,0,0,0.12);
-  
-  /* Borde estilo degradado café/madera */
   border: 5px solid;
   border-image: linear-gradient(45deg, #5C3317, #8B4513, #A0522D) 1;
   
@@ -65,6 +115,9 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+
+  /* ← ESPACIO VERTICAL REAL Y ELEGANTE */
+  margin-bottom: 80px;        /* En móvil y tablet */
 }
 
 .product-card:hover {
@@ -73,7 +126,14 @@
   border-image: linear-gradient(45deg, #8B4513, #A0522D, #D2691E) 1;
 }
 
-/* IMAGEN REDONDEADA ARRIBA */
+/* Más espacio vertical en pantallas grandes */
+@media (min-width: 1024px) {
+  .product-card {
+    margin-bottom: 100px;
+  }
+}
+
+/* IMAGEN */
 .product-img {
   width: 100%;
   height: 260px;
@@ -81,7 +141,7 @@
   border-radius: 32px 32px 0 0;
 }
 
-/* CONTENIDO CON ESPACIO PERFECTO */
+/* CONTENIDO */
 .product-body {
   padding: 30px;
   display: flex;
@@ -90,7 +150,6 @@
   justify-content: space-between;
 }
 
-/* TEXTOS */
 .product-title {
   font-size: 1.8rem;
   font-weight: 800;
@@ -112,7 +171,7 @@
   margin-bottom: 20px;
 }
 
-/* ACCIONES: CONTADOR + BOTÓN DENTRO DE LA TARJETA */
+/* ACCIONES */
 .product-actions {
   display: flex;
   justify-content: space-between;
@@ -121,50 +180,40 @@
   gap: 16px;
 }
 
-/* CONTADOR ULTRA-COMPACTO Y BONITO */
+/* CONTADOR */
 .counter {
   display: flex;
   align-items: center;
   background: #f5ede3;
   border-radius: 50px;
-  padding: 3px 6px;           /* ← más pequeño */
+  padding: 3px 6px;
   box-shadow: inset 0 2px 6px rgba(0,0,0,0.12);
-  gap: 8px;                    /* ← menos espacio entre botones */
+  gap: 8px;
 }
 
 .counter-btn {
-  width: 34px;                 /* ← antes 44px → ahora 34px */
-  height: 34px;                /* ← más pequeño y lindo */
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   border: none;
-  font-size: 1.3rem;           /* ← texto más pequeño */
+  font-size: 1.3rem;
   font-weight: bold;
   transition: all 0.2s;
 }
 
-.counter-btn.minus {
-  background: #e9dfd3;
-  color: #8B4513;
-}
-
-.counter-btn.plus {
-  background: #8B4513;
-  color: white;
-}
-
-.counter-btn:hover {
-  transform: scale(1.2);
-}
+.counter-btn.minus { background: #e9dfd3; color: #8B4513; }
+.counter-btn.plus { background: #8B4513; color: white; }
+.counter-btn:hover { transform: scale(1.2); }
 
 .counter-value {
   min-width: 32px;
   text-align: center;
-  font-size: 1.25rem;          /* ← número más discreto */
+  font-size: 1.25rem;
   font-weight: bold;
   color: #3a2c1f;
 }
 
-/* BOTÓN ELEGIR PERFECTO */
+/* BOTÓN ELEGIR */
 .btn-elegir {
   background: #8B4513;
   color: white;
@@ -185,4 +234,24 @@
   background: #6B3510;
   transform: translateY(-4px);
   box-shadow: 0 15px 30px rgba(139, 75, 42, 0.4);
+}
+
+
+
+.menu-wrapper {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 100 px;           /* espacio lateral perfecto */
+}
+
+@media (min-width: 1600px) {
+  .menu-wrapper {
+    padding: 0 100px;        /* mucho aire en pantallas gigantes */
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-wrapper {
+    padding: 0 15px;
+  }
 }

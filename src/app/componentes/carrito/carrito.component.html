@@ -23,10 +23,7 @@
           <td>${{ item.producto.precio }}</td>
           <td>{{ item.observaciones }}</td>
           <td>
-            <button class="btn btn-danger btn-sm me-1"
-                    (click)="eliminarUnidad(item.producto.id, item.observaciones)">
-              <i class="bi bi-dash-circle"></i>
-            </button>
+          
             <button class="btn btn-danger btn-sm"
                     (click)="eliminarProducto(item.producto.id)">
               <i class="bi bi-trash"></i>

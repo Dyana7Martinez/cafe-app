@@ -9,11 +9,13 @@ import { ActualizarComponent } from './componentes/actualizar/actualizar.compone
 import { ErrorPersonalizadoComponent } from './componentes/error-personalizado/error-personalizado.component';
 import { LoginComponent } from './componentes/login/login.component';
 import { LoginGuardian } from './componentes/login/login-guardian';
+import { AdminComponent } from './componentes/admin/admin.component';
 
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'admin', component: AdminComponent },
   { path: 'menu', component: MenuComponent },
   { path: 'carrito', component: CarritoComponent },
    { path: 'lista-pedidos', component: ListaPedidosComponent,canActivate: [LoginGuardian] },

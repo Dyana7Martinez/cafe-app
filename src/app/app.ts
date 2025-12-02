@@ -18,6 +18,8 @@ export class App implements OnInit {
     firebase.initializeApp({
      apiKey: "AIzaSyCvUynQ4rK4xTKC8yvF0mFRvzVFXcAYBX4",
   authDomain: "cafeteria-app-72612.firebaseapp.com",
+  databaseURL: "https://cafeteria-app-72612-default-rtdb.firebaseio.com",
+
     })
   };
 

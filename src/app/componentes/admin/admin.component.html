@@ -1,0 +1,94 @@
+<div class="admin-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <i class="fas fa-coffee"></i>
+      </div>
+      <h3>BeanFlow</h3>
+    </div>
+    
+    <div class="user-profile">
+      <div class="avatar">
+        <i class="fas fa-user"></i>
+      </div>
+      <h4>{{ userEmail }}</h4>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <a (click)="cambiarVista('home')" class="nav-item" [class.active]="vistaActual === 'home'">
+        <i class="fas fa-home"></i>
+        Home
+      </a>
+      <a (click)="cambiarVista('menu')" class="nav-item" [class.active]="vistaActual === 'menu'">
+        <i class="fas fa-utensils"></i>
+        Menú
+      </a>
+      <a (click)="cambiarVista('carrito')" class="nav-item" [class.active]="vistaActual === 'carrito'">
+        <i class="fas fa-shopping-cart"></i>
+        Carrito
+      </a>
+      <a (click)="cambiarVista('pedidos')" class="nav-item" [class.active]="vistaActual === 'pedidos'">
+        <i class="fas fa-clipboard-list"></i>
+        Pedido
+      </a>
+    </nav>
+    
+    <button class="signout-btn" (click)="cerrarSesion()">
+      <i class="fas fa-sign-out-alt"></i>
+      Cerrar Sesión
+    </button>
+  </aside>
+  
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Vista Home -->
+    <div class="welcome-dashboard" *ngIf="vistaActual === 'home'">
+      <div class="welcome-header">
+        <i class="fas fa-coffee welcome-icon"></i>
+        <h1>Bienvenido a BeanFlow</h1>
+        <p class="subtitle">Panel de Administración</p>
+      </div>
+      
+      <div class="welcome-message">
+        <p>Gestiona tu cafetería de manera eficiente desde un solo lugar.</p>
+        <p>Utiliza el menú lateral para navegar entre las diferentes secciones.</p>
+      </div>
+      
+      <div class="quick-actions">
+        <div class="action-card">
+          <i class="fas fa-utensils"></i>
+          <h3>Menú</h3>
+          <p>Ver productos disponibles</p>
+        </div>
+        
+        <div class="action-card">
+          <i class="fas fa-shopping-cart"></i>
+          <h3>Carrito</h3>
+          <p>Gestionar pedidos</p>
+        </div>
+        
+        <div class="action-card">
+          <i class="fas fa-clipboard-list"></i>
+          <h3>Pedidos</h3>
+          <p>Ver historial</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vista Menú -->
+    <div class="content-view" *ngIf="vistaActual === 'menu'">
+      <app-menu></app-menu>
+    </div>
+
+    <!-- Vista Carrito -->
+    <div class="content-view" *ngIf="vistaActual === 'carrito'">
+      <app-carrito></app-carrito>
+    </div>
+
+    <!-- Vista Pedidos -->
+    <div class="content-view" *ngIf="vistaActual === 'pedidos'">
+      <app-lista-pedidos></app-lista-pedidos>
+    </div>
+  </main>
+</div>

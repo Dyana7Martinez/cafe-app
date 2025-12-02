@@ -44,41 +44,47 @@
 
 <router-outlet></router-outlet>
 
-<footer class="bg-dark text-white text-center py-4">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <h5>Sobre Nosotros</h5>
-        <p class="lead text-shadow-lg mx-auto mb-5 text-shadow-lg animate__animated animate__fadeInUp animate__delay-2s" style="max-width: 700px;">
-    En BeanFlow, la excelencia se combina con el corazón. Como cafetería, somos expertos dedicados a la ciencia y el arte del café.
-</p>
+<footer class="footer-coffee">
+  <div class="container py-3 py-md-4">   
+    <div class="row g-4 g-md-5 text-center text-md-start">
+      
+      <!-- Sobre nosotros -->
+      <div class="col-12 col-md-4 mb-3 mb-md-0">
+        <h5 class="fw-bold text-amber-900 mb-3">Sobre BeanFlow</h5>
+        <p class="text-amber-700 small lh-lg">
+          En BeanFlow, la excelencia se combina con el corazón. Somos expertos dedicados a la ciencia y el arte del café, ofreciendo experiencias únicas en cada taza.
+        </p>
       </div>
 
-      <div class="col-md-4">
-        <h5>Enlaces</h5>
+      <!-- Enlaces -->
+      <div class="col-12 col-md-4 mb-4">
+        <h5 class="fw-bold text-amber-900 mb-3">Enlaces</h5>
         <ul class="list-unstyled">
-          <li><a href="/" class="text-white">Inicio</a></li>
-          <li><a href="/home" class="text-white">Home</a></li>
-          <li><a href="/menu" class="text-white">Menú</a></li>
-           <li><a href="/sobre-nosotros" class="text-white"> Nosotros</a></li>
-          <li><a href="/contacto" class="text-white">Contacto</a></li>
+          <li><a routerLink="/" class="text-amber-600 hover:text-amber-800">Inicio</a></li>
+          <li><a routerLink="/menu" class="text-amber-600 hover:text-amber-800">Menú</a></li>
+          <li><a routerLink="/nosotros" class="text-amber-600 hover:text-amber-800">Nosotros</a></li>
+          <li><a routerLink="/contacto" class="text-amber-600 hover:text-amber-800">Contacto</a></li>
         </ul>
       </div>
 
-      <div class="col-md-4">
-        <h5>Contáctanos</h5>
-        <p><i class="fa-solid fa-phone"></i> +503 2285-7930</p>
-        <p><i class="fa-solid fa-envelope"></i> contactocvk.com</p>
-        <div class="d-flex justify-content-center">
-          <a href="#" class="text-white mx-2"><i class="fa-brands fa-facebook"></i></a>
-          <a href="#" class="text-white mx-2"><i class="fa-brands fa-twitter"></i></a>
-          <a href="#" class="text-white mx-2"><i class="fa-brands fa-instagram"></i></a>
-        </div>
+      <!-- Contacto -->
+      <div class="col-12 col-md-4 mb-4">
+        <h5 class="fw-bold text-amber-900 mb-3">Contáctanos</h5>
+        <p class="text-amber-700 small">
+          <i class="bi bi-telephone"></i> +503 2285-7930<br>
+          <i class="bi bi-envelope"></i> hola&#64;beanflow.com<br><br>
+          <a href="#" class="text-amber-600 fs-4 mx-2"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="text-amber-600 fs-4 mx-2"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="text-amber-600 fs-4 mx-2"><i class="bi bi-twitter"></i></a>
+        </p>
       </div>
     </div>
 
-    <div class="mt-3">
-      <p>&copy; 2025  - Cafeteria BeanFlow. Todos los derechos reservados.        </p>
+ <hr class="border-amber-600 my-3 opacity-20">
+
+    <div class="text-center py-3 text-amber-600 small">
+      © 2025 - Cafetería BeanFlow. Todos los derechos reservados. 
+      <span class="text-amber-800">♡ Creado por Dyana Martínez</span>
     </div>
   </div>
 </footer>

@@ -108,11 +108,7 @@
 html { scroll-behavior: smooth; }
 
 .hero-image {
-  /* Usando la ruta absoluta desde la raíz del servidor (el '/') */
-  background-image: url('/assets/images/producto/background-coffee.jpg'); 
-  
-  /* Asegúrate de que las propiedades siguientes estén definidas
-     para que la imagen se muestre correctamente: */
+
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

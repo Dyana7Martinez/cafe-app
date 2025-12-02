@@ -53,6 +53,7 @@ export class CarritoHComponent {
       html: `
         <strong>Mesa:</strong> ${this.pedido.cliente.mesa}<br>
         <strong>Cliente:</strong> ${this.pedido.cliente.nombre}<br>
+        <strong>Cliente:</strong> ${this.pedido.cliente.observaciones}<br>
         <strong>Total:</strong> $${this.pedido.total.toFixed(2)}
       `,
       icon: 'question',
